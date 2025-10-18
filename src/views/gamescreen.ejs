@@ -10,12 +10,11 @@
   <header>
     <nav>
       <div class="container">
-        <a href="/" class="logo">CS346 Project</a>
+        <a href="/" class="logo">Trivia</a>
         <ul class="nav-links">
           <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
           <% if (user) { %>
-            <li><a href="profile.ejs">Profile</a></li>
+            <li><a href="/profile">Profile</a></li>
             <li>
               <form action="/users/logout" method="POST" style="display: inline;">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -23,7 +22,8 @@
               </form>
             </li>
           <% } else { %>
-            <li><a href="/users/login">Login</a></li>
+            <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
+            <li><a href="/login">Login</a></li>
             <li><a href="/users/register">Register</a></li>
           <% } %>
         </ul>
@@ -33,15 +33,15 @@
 
   <main class="container">
     <section class="hero">
-      <h1>Gameview</h1>
-      <p>basic webpage that will hold the trivia game</p>
+      <h1>Current Game</h1>
+      <p>Choose the best answer below</p>
     </section>
 
-    <section class="features">
-      <h2>Features</h2>
+    <section class="trivia-games">
+      <h2>Current Question</h2>
       <div class="feature-grid">
         <div class="feature">
-          <h3>Question</h3>
+          <h3>Answers</h3>
           <ul>
             <li>Answer 1</li>
             <li>Answer 2</li>
@@ -54,7 +54,7 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2024 CS346 Project. All rights reserved.</p>
+      <p>&copy; 2025 CS346 Project. All rights reserved.</p>
     </div>
   </footer>
 

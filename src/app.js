@@ -88,6 +88,13 @@ app.get('/gamescreen', csrfProtection, (req, res) => {
   });
 });
 
+app.get('/login', csrfProtection, (req, res) => {
+  res.render('login', {
+    title: 'Login',
+    csrfToken: req.csrfToken(),
+  });
+});
+
 app.get('/profile', csrfProtection, (req, res) => {
   res.render('profile', {
     title: 'Profile',
