@@ -23,7 +23,7 @@
               </form>
             </li>
           <% } else { %>
-            <li><a href="/profile">Login</a></li>
+            <li><a href="/users/login">Login</a></li>
             <li><a href="/users/register">Register</a></li>
           <% } %>
         </ul>
@@ -33,31 +33,19 @@
 
   <main class="container">
     <section class="hero">
-      <h1>Welcome to CS346 Project Template</h1>
-      <p>A secure Node.js + Express + EJS + PostgreSQL application template</p>
+      <h1>Name</h1>
+      <p>a basic page that will hold profile information</p>
     </section>
 
     <section class="features">
       <h2>Features</h2>
       <div class="feature-grid">
         <div class="feature">
-          <h3>Trivia Game</h3>
-          <p>Click to play trivia <a href="/gamescreen">here</a></p>
+          <h3>Stats</h3>
+          <p>And other features will go here...</p>
         </div>
       </div>
     </section>
-
-    <section class="getting-started">
-      <h2>Getting Started</h2>
-      <ol>
-        <li>Copy <code>.env.example</code> to <code>.env</code> and configure your environment variables</li>
-        <li>Set up your PostgreSQL database</li>
-        <li>Run <code>npm run migrate</code> to create database tables</li>
-        <li>Run <code>npm run seed</code> to populate with sample data</li>
-        <li>Start the development server with <code>npm run dev</code></li>
-      </ol>
-    </section>
-  </main>
 
   <footer>
     <div class="container">
