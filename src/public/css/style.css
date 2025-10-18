@@ -167,13 +167,83 @@ main {
   margin-bottom: 1rem;
 }
 
+.trivia-games-grid button {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+
+/* Playing Game Section */
+.answers {
+  padding: 2rem;
+  background-color: var(--light-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.answers ul {
+  list-style: none;
+  padding: 0;
+}
+
+.answers li {
+  font-size: 1.2rem;
+  margin-bottom: .5rem;
+}
+
+.answers h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+
+/* Login and Register pages */
+.user-input input {
+  height: 1.75rem;
+  padding: .5rem .75rem;
+}
+
+.user-input li {
+  font-size: 1.2rem;
+  margin-bottom: .5rem;
+  list-style-type: none;
+}
+
+.user-input ul {
+  place-items: center;
+}
+
+
 /* Account Section*/
 .account {
-  background-color: darkgray;
+  background-color: lightgray;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5%;
+}
+
+.account h2 {
+  text-align: center;
+}
+
+.account div {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+.account ul{
+  list-style-type: none;
+}
+
+#account-h2 {
+  text-align: center;
+}
+
 /* Getting Started Section */
 .leaderboard {
   background-color: var(--light-color);
@@ -258,7 +328,7 @@ main {
 .form-group input,
 .form-group textarea,
 .form-group select {
-  width: 100%;
+  width: 50%;
   padding: 0.5rem;
   border: 1px solid var(--secondary-color);
   border-radius: var(--border-radius);

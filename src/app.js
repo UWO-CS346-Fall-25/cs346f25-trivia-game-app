@@ -95,6 +95,13 @@ app.get('/login', csrfProtection, (req, res) => {
   });
 });
 
+app.get('/register', csrfProtection, (req, res) => {
+  res.render('register', {
+    title: 'Register',
+    csrfToken: req.csrfToken(),
+  });
+});
+
 app.get('/profile', csrfProtection, (req, res) => {
   res.render('profile', {
     title: 'Profile',

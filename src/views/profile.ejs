@@ -24,7 +24,7 @@
           <% } else { %>
             <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
             <li><a href="/login">Login</a></li>
-            <li><a href="/users/register">Register</a></li>
+            <li><a href="/register">Register</a></li>
           <% } %>
         </ul>
       </div>
@@ -37,8 +37,29 @@
       <p>Account age</p>
     </section>
 
+    <h2 id="account-h2">Account</h2>
     <section class="account">
-      <h2>Account</h2>
+      <div class="recomended-games">
+        <h3>Recomended Games</h3>
+        <div class="trivia-games-grid">
+          <div class="trivia-game">
+            <h3>Game 1</h3>
+            <p><a href="\gamescreen"><button class="btn">Play</button></a></p>
+          </div>
+          <div class="trivia-game">
+            <h3>Game 2</h3>
+            <p><a href="\gamescreen"><button class="btn">Play</button></a></p>
+          </div>
+          <div class="trivia-game">
+            <h3>Game 3</h3>
+            <p><a href="\gamescreen"><button class="btn">Play</button></a></p>
+          </div>
+          <div class="trivia-game">
+            <h3>Game 4</h3>
+            <p><a href="\gamescreen"><button class="btn">Play</button></a></p>
+          </div>
+        </div>
+      </div>
       <div class="account-information">
         <div class="information">
           <h3>Account Information</h3>
@@ -47,6 +68,7 @@
             <li>Date of creation</li>
             <li>Other relevent information</li>
           </ul>
+        </div>
         <div class="Stats">
           <h3>Stats</h3>
           <ul>
@@ -57,11 +79,12 @@
             <li>Right to wrong ratio</li>
           </ul>
         </div>
-        <div class="account-settings">
-          <h3>Settings</h3>
-          <ul>
-            <li>Something</li>
-          </ul>
+      </div>
+      <div class="account-settings">
+        <h3>Settings</h3>
+        <ul>
+          <li>Something</li>
+        </ul>
       </div>
     </section>
 

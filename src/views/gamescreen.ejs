@@ -24,7 +24,7 @@
           <% } else { %>
             <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
             <li><a href="/login">Login</a></li>
-            <li><a href="/users/register">Register</a></li>
+            <li><a href="/register">Register</a></li>
           <% } %>
         </ul>
       </div>
@@ -39,15 +39,16 @@
 
     <section class="trivia-games">
       <h2>Current Question</h2>
-      <div class="feature-grid">
-        <div class="feature">
+      <div class="trivia-games-grid">
+        <div class="answers">
           <h3>Answers</h3>
           <ul>
-            <li>Answer 1</li>
-            <li>Answer 2</li>
-            <li>Answer 3</li>
-            <li>Answer 4</li>
+            <li><input type="radio" name="choice"> Answer 1</li>
+            <li><input type="radio" name="choice"> Answer 2</li>
+            <li><input type="radio" name="choice"> Answer 3</li>
+            <li><input type="radio" name="choice"> Answer 4</li>
           </ul>
+          <button class="btn">Submit</button>
         </div>
       </div>
     </section>
