@@ -81,6 +81,34 @@ app.get('/', csrfProtection, (req, res) => {
   });
 });
 
+app.get('/gamescreen', csrfProtection, (req, res) => {
+  res.render('gamescreen', {
+    title: 'Game',
+    csrfToken: req.csrfToken(),
+  });
+});
+
+app.get('/login', csrfProtection, (req, res) => {
+  res.render('login', {
+    title: 'Login',
+    csrfToken: req.csrfToken(),
+  });
+});
+
+app.get('/register', csrfProtection, (req, res) => {
+  res.render('register', {
+    title: 'Register',
+    csrfToken: req.csrfToken(),
+  });
+});
+
+app.get('/profile', csrfProtection, (req, res) => {
+  res.render('profile', {
+    title: 'Profile',
+    csrfToken: req.csrfToken(),
+  });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).render('error', {

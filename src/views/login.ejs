@@ -4,55 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> | Trivia</title>
-  
-  <!-- CSS -->
   <link rel="stylesheet" href="/css/style.css">
-  
-  <!-- Additional head content -->
-  <%- typeof head !== 'undefined' ? head : '' %>
 </head>
 <body>
-  <!-- Header/Navigation -->
   <header>
     <nav>
       <div class="container">
-        <a href="/" class="logo">CS346 Project</a>
+        <a href="/" class="logo">Trivia</a>
         <ul class="nav-links">
           <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
           <% if (user) { %>
             <li><a href="/profile">Profile</a></li>
             <li>
               <form action="/users/logout" method="POST" style="display: inline;">
-                <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
-                <button type="submit">Logout</button>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn-link">Logout</button>
               </form>
             </li>
           <% } else { %>
-            <li><a href="/users/login">Login</a></li>
-            <li><a href="/users/register">Register</a></li>
+            <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
           <% } %>
         </ul>
       </div>
     </nav>
   </header>
 
-  <!-- Main Content -->
   <main class="container">
-    <%- body %>
-  </main>
+    <section class="trivia-games">
+    
+      <div class="trivia-games-grid">
+        <div class="user-input">
+          <h2>Login</h2>
+          <ul>
+            <li>Username <input type="text" name="username"></li>
+            <li>Password&nbsp; <input type="password" name="password"></li>
+          </ul>
+          <button class="btn">Submit</button>
+        </div>
+      </div>
+    </section>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <p>&copy; 2025 CS346 Trivia Project. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- JavaScript -->
   <script src="/js/main.js"></script>
-  
-  <!-- Additional scripts -->
-  <%- typeof scripts !== 'undefined' ? scripts : '' %>
 </body>
 </html>

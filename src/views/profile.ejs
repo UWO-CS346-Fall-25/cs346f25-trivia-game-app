@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Trivia</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="container">
+        <a href="/" class="logo">Trivia</a>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <% if (user) { %>
+            <li><a href="/profile">Profile</a></li>
+            <li>
+              <form action="/users/logout" method="POST" style="display: inline;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn-link">Logout</button>
+              </form>
+            </li>
+          <% } else { %>
+            <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+          <% } %>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Account Name</h1>
+      <p>Account age</p>
+    </section>
+
+    <h2 id="account-h2">Account</h2>
+    <section class="account">
+      <div class="recomended-games">
+        <h3>Recomended Games</h3>
+        <div class="trivia-games-grid">
+          <div class="trivia-game">
+            <h3>Game 1</h3>
+            <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
+          </div>
+          <div class="trivia-game">
+            <h3>Game 2</h3>
+            <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
+          </div>
+          <div class="trivia-game">
+            <h3>Game 3</h3>
+            <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
+          </div>
+          <div class="trivia-game">
+            <h3>Game 4</h3>
+            <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
+          </div>
+        </div>
+      </div>
+      <div class="account-information">
+        <div class="information">
+          <h3>Account Information</h3>
+          <ul>
+            <li>Name</li>
+            <li>Date of creation</li>
+            <li>Other relevent information</li>
+          </ul>
+        </div>
+        <div class="Stats">
+          <h3>Stats</h3>
+          <ul>
+            <li>Games played</li>
+            <li>Favorite trivia</li>
+            <li>Questions answered right</li>
+            <li>Questions answered wrong</li>
+            <li>Right to wrong ratio</li>
+          </ul>
+        </div>
+      </div>
+      <div class="account-settings">
+        <h3>Settings</h3>
+        <ul>
+          <li>Something</li>
+        </ul>
+      </div>
+    </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 CS346 Trivia Project. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

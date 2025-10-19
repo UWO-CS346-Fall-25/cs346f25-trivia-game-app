@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Trivia</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="container">
+        <a href="/" class="logo">Trivia</a>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <% if (user) { %>
+            <li><a href="/profile">Profile</a></li>
+            <li>
+              <form action="/users/logout" method="POST" style="display: inline;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn-link">Logout</button>
+              </form>
+            </li>
+          <% } else { %>
+            <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+          <% } %>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Current Game</h1>
+      <p>Choose the best answer below</p>
+    </section>
+
+    <section class="trivia-games">
+      <h2>Current Question</h2>
+      <div class="trivia-games-grid">
+        <div class="answers">
+          <h3>Answers</h3>
+          <ul>
+            <li><input type="radio" name="choice"> Answer 1</li>
+            <li><input type="radio" name="choice"> Answer 2</li>
+            <li><input type="radio" name="choice"> Answer 3</li>
+            <li><input type="radio" name="choice"> Answer 4</li>
+          </ul>
+          <button class="btn">Submit</button>
+        </div>
+      </div>
+    </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 CS346 Trivia Project. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

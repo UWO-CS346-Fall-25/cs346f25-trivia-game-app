@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> - CS346 Project</title>
+  <title><%= title %> | Trivia</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header>
     <nav>
       <div class="container">
-        <a href="/" class="logo">CS346 Project</a>
+        <a href="/" class="logo">Trivia</a>
         <ul class="nav-links">
           <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
           <% if (user) { %>
             <li><a href="/profile">Profile</a></li>
             <li>
@@ -23,8 +22,9 @@
               </form>
             </li>
           <% } else { %>
-            <li><a href="/users/login">Login</a></li>
-            <li><a href="/users/register">Register</a></li>
+            <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
           <% } %>
         </ul>
       </div>
@@ -33,47 +33,64 @@
 
   <main class="container">
     <section class="hero">
-      <h1>Welcome to CS346 Project Template</h1>
-      <p>A secure Node.js + Express + EJS + PostgreSQL application template</p>
+      <h1>Trivia Home</h1>
+      <p>Choose a Game Below to Get Started</p>
     </section>
 
-    <section class="features">
-      <h2>Features</h2>
-      <div class="feature-grid">
-        <div class="feature">
-          <h3>🔒 Security</h3>
-          <p>Built with Helmet, CSRF protection, and secure sessions</p>
+    <section class="trivia-games">
+      <h2>Game Selection</h2>
+      <div class="trivia-games-grid">
+        <div class="trivia-game">
+          <h3>Game 1</h3>
+          <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
         </div>
-        <div class="feature">
-          <h3>🗄️ Database</h3>
-          <p>PostgreSQL with parameterized queries for SQL injection prevention</p>
+        <div class="trivia-game">
+          <h3>Game 2</h3>
+          <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
         </div>
-        <div class="feature">
-          <h3>🎨 Templates</h3>
-          <p>EJS templating engine for dynamic HTML rendering</p>
+        <div class="trivia-game">
+          <h3>Game 3</h3>
+          <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
         </div>
-        <div class="feature">
-          <h3>📦 Modern Stack</h3>
-          <p>Node.js 20, Express 4, and best practices</p>
+        <div class="trivia-game">
+          <h3>Game 4</h3>
+          <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
+        </div>
+        <div class="trivia-game">
+          <h3>Game 5</h3>
+          <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
+        </div>
+        <div class="trivia-game">
+          <h3>Game 6</h3>
+          <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
+        </div>
+        <div class="trivia-game">
+          <h3>Game 7</h3>
+          <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
+        </div>
+        <div class="trivia-game">
+          <h3>Game 8</h3>
+          <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
         </div>
       </div>
     </section>
 
-    <section class="getting-started">
-      <h2>Getting Started</h2>
+    <section class="leaderboard">
+      <h2>Leaderboard</h2>
+      <h3>Top 5 players with the highest all-time scores</h3>
       <ol>
-        <li>Copy <code>.env.example</code> to <code>.env</code> and configure your environment variables</li>
-        <li>Set up your PostgreSQL database</li>
-        <li>Run <code>npm run migrate</code> to create database tables</li>
-        <li>Run <code>npm run seed</code> to populate with sample data</li>
-        <li>Start the development server with <code>npm run dev</code></li>
+        <li>Player 1</li>
+        <li>Player 2</li>
+        <li>Player 3</li>
+        <li>Player 4</li>
+        <li>Player 5</li>
       </ol>
     </section>
   </main>
 
   <footer>
     <div class="container">
-      <p>&copy; 2024 CS346 Project. All rights reserved.</p>
+      <p>&copy; 2025 CS346 Trivia Project. All rights reserved.</p>
     </div>
   </footer>
 
