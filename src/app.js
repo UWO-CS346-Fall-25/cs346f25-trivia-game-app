@@ -73,6 +73,10 @@ app.use((req, res, next) => {
 // const indexRouter = require('./routes/index');
 // app.use('/', indexRouter);
 
+//New routes
+const gameRouter = require('./routes/game');
+app.use('/', gameRouter);
+
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {
   res.render('index', {
