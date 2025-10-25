@@ -1,7 +1,6 @@
 /**
- * Index Routes
+ * Game Routes
  *
- * Define routes for the main pages of your application here.
  * Routes connect HTTP requests to controller functions.
  *
  *
@@ -14,6 +13,8 @@
 const express = require('express');
 const router = express.Router();
 const gameController = require('../controllers/gameController');
+router.get('/:category', gameController.loadGame);
+router.post('/:category/check', gameController.checkAnswer);
 
 // Import controllers
 // const indexController = require('../controllers/indexController');

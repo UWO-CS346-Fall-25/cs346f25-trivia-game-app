@@ -74,8 +74,8 @@ app.use((req, res, next) => {
 // app.use('/', indexRouter);
 
 //New routes
-const gameRouter = require('./routes/game');
-app.use('/', gameRouter);
+const gameRouter = require('./routes/gamescreen');
+app.use('/gamescreen', gameRouter);
 
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {
@@ -102,6 +102,13 @@ app.get('/login', csrfProtection, (req, res) => {
 app.get('/register', csrfProtection, (req, res) => {
   res.render('register', {
     title: 'Register',
+    csrfToken: req.csrfToken(),
+  });
+});
+
+app.get('/gameover', csrfProtection, (req, res) => {
+  res.render('gameover', {
+    title: 'Game Over',
     csrfToken: req.csrfToken(),
   });
 });
