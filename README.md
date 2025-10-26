@@ -11,6 +11,15 @@ A teaching template for building secure web applications with Node.js, Express, 
 - 📝 **Clean Code** - ESLint, Prettier, best practices
 - 🎓 **Educational** - Well-documented, instructional code
 
+##  Current Summary of the project
+
+We have implemented a mild amount of interactability with the buttons and trivia questions.  You
+can go into a trivia and after 5 questions, it will tell you how many you got right.  We have also
+have a s profile, register, and locgin page that don't do much right now.  In the login page, the
+button can be used but doesn't work exactly as intended right now.  The likely next addition we'll 
+add is a way to store information neccesary for logged in users as well as changing up the site 
+based on if the user in logged in.
+
 ## Quick Start
 
 1. **Clone the repository**
