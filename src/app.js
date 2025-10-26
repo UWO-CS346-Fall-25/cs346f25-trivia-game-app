@@ -14,6 +14,7 @@ const path = require('path');
 const helmet = require('helmet');
 const session = require('express-session');
 const csrf = require('csurf');
+const userRoutes = require('../src/routes/users');
 
 // Initialize Express app
 const app = express();
@@ -56,6 +57,8 @@ app.use(
     },
   })
 );
+
+app.use('/', userRoutes);
 
 // CSRF protection
 // Note: Apply this after session middleware
