@@ -33,21 +33,16 @@
 
   <main class="container">
     <section class="hero">
-      <h1><%= title%></h1>
-      <p>Choose the best answer below</p>
+      <h1>Game Over!</h1>
+      <p>See stats below</p>
     </section>
     <section class="trivia-games">
-      <h2> <%= question.question %></h2>
+      <h2>Stats</h2>
       <div class="trivia-games-grid">
         <div class="answers">
-          <h3>Choices</h3>
-          <ul>
-            <li><input type="radio" name="choice" id="first" value="<%= question.choices[0] %>"> <%= question.choices[0] %> </li>
-            <li><input type="radio" name="choice" id="second" value="<%= question.choices[1] %>"> <%= question.choices[1] %></li>
-            <li><input type="radio" name="choice" id="third" value="<%= question.choices[2] %>"> <%= question.choices[2] %></li>
-            <li><input type="radio" name="choice" id="fourth" value="<%= question.choices[3] %>"> <%= question.choices[3] %></li>
-          </ul>
-          <button class="btn" id="submitAnswer">Submit</button>
+          <h3>Number Correct</h3>
+          <%= score %> out of <%= total%>
+          <a href="/" class="btn">Go Back Home</a>
         </div>
       </div>
     </section>

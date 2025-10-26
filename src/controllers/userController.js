@@ -62,7 +62,15 @@ exports.getLogin = (req, res) => {
  */
 exports.postLogin = async (req, res, next) => {
   try {
-    // const { email, password } = req.body;
+    const { username, password } = req.body;
+
+    if (username && password) {
+      req.session.username = username;
+      res.redirect('/profile');
+    }
+    else {
+      res.redirect('/login');
+    }
 
     // Find user by email
     // const user = await User.findByEmail(email);
@@ -80,7 +88,7 @@ exports.postLogin = async (req, res, next) => {
     // req.session.user = { id: user.id, username: user.username };
 
     // Redirect to home or dashboard
-    res.redirect('/');
+    //res.redirect('/');
   } catch (error) {
     next(error);
   }
@@ -97,6 +105,11 @@ exports.postLogout = (req, res) => {
     }
     res.redirect('/');
   });
+};
+
+exports.getProfile = (req, res) => {
+  const username = req.session.username || 'Guest';
+  res.render('profile', {title: 'profile', username });
 };
 
 // Add more controller methods as needed

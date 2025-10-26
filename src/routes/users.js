@@ -26,10 +26,13 @@ const express = require('express');
 const router = express.Router();
 
 // Import controllers
-// const userController = require('../controllers/userController');
+const userController = require('../controllers/userController');
 
 // Define routes
 // router.get('/register', userController.getRegister);
 // router.post('/register', userController.postRegister);
+router.get('/login', userController.getLogin);
+router.post('/login', userController.postLogin);
+router.get('/profile', userController.getProfile);
 
 module.exports = router;

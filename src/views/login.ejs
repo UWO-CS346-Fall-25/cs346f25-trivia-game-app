@@ -37,11 +37,13 @@
       <div class="trivia-games-grid">
         <div class="user-input">
           <h2>Login</h2>
-          <ul>
-            <li>Username <input type="text" name="username"></li>
-            <li>Password&nbsp; <input type="password" name="password"></li>
-          </ul>
-          <button class="btn">Submit</button>
+          <form action="/login" method="POST">
+            <ul>
+              <li>Username <input type="text" name="username"></li>
+              <li>Password&nbsp; <input type="password" name="password"></li>
+            </ul>
+            <button class="btn">Login</button>
+          </form>
         </div>
       </div>
     </section>

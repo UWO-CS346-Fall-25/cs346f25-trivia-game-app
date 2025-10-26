@@ -185,5 +185,31 @@ function showNotification(message, type = 'info') {
   }, 3000);
 }
 
+//Button Listener for game page
+document.addEventListener("click", async (event) => {
+  if(event.target && event.target.id === "submitAnswer") {
+    event.preventDefault();
+    await submit();
+  }
+});
+
+
+async function submit() {
+  selected = document.querySelector('input[name="choice"]:checked');
+  if(selected) {
+    choice = selected.value;
+    const response = await fetch("/gamescreen/movies/check", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ answer: choice })
+    });
+    const html = await response.text();
+    document.body.innerHTML = html;
+  }
+  else {
+    alert("Choose An Answer!")
+  }
+}
+
 // Export functions if using modules
 // export { validateForm, makeRequest, showNotification };

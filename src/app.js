@@ -14,6 +14,7 @@ const path = require('path');
 const helmet = require('helmet');
 const session = require('express-session');
 const csrf = require('csurf');
+const userRoutes = require('../src/routes/users');
 
 // Initialize Express app
 const app = express();
@@ -57,6 +58,8 @@ app.use(
   })
 );
 
+app.use('/', userRoutes);
+
 // CSRF protection
 // Note: Apply this after session middleware
 const csrfProtection = csrf({ cookie: false });
@@ -72,6 +75,10 @@ app.use((req, res, next) => {
 // Example:
 // const indexRouter = require('./routes/index');
 // app.use('/', indexRouter);
+
+//New routes
+const gameRouter = require('./routes/gamescreen');
+app.use('/gamescreen', gameRouter);
 
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {
@@ -98,6 +105,13 @@ app.get('/login', csrfProtection, (req, res) => {
 app.get('/register', csrfProtection, (req, res) => {
   res.render('register', {
     title: 'Register',
+    csrfToken: req.csrfToken(),
+  });
+});
+
+app.get('/gameover', csrfProtection, (req, res) => {
+  res.render('gameover', {
+    title: 'Game Over',
     csrfToken: req.csrfToken(),
   });
 });
