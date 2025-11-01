@@ -50,9 +50,8 @@ exports.postRegister = async (req, res, next) => {
  * Display login form
  */
 exports.getLogin = (req, res) => {
-  res.render('users/login', {
+  res.render('login', {
     title: 'Login',
-    csrfToken: req.csrfToken(),
   });
 };
 
@@ -66,10 +65,10 @@ exports.postLogin = async (req, res, next) => {
 
     if (username && password) {
       req.session.username = username;
-      res.redirect('/profile');
+      res.redirect('profile');
     }
     else {
-      res.redirect('/login');
+      res.redirect('login');
     }
 
     // Find user by email
@@ -109,7 +108,7 @@ exports.postLogout = (req, res) => {
 
 exports.getProfile = (req, res) => {
   const username = req.session.username || 'Guest';
-  res.render('profile', {title: 'profile', username });
+  res.render('profile', {title: 'profile', user: req.session.username });
 };
 
 // Add more controller methods as needed
