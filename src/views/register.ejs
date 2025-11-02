@@ -15,14 +15,7 @@
           <li><a href="/">Home</a></li>
           <% if (user) { %>
             <li><a href="/profile">Profile</a></li>
-            <li>
-              <form action="/users/logout" method="POST" style="display: inline;">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit" class="btn-link">Logout</button>
-              </form>
-            </li>
           <% } else { %>
-            <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
           <% } %>
@@ -37,11 +30,18 @@
       <div class="trivia-games-grid">
         <div class="user-input">
           <h2>Create an Account</h2>
-          <ul>
-            <li>Username <input type="text" name="username"></li>
-            <li>Password&nbsp; <input type="password" name="password"></li>
-          </ul>
-          <button class="btn">Submit</button>
+          <form action="/register" method="POST">
+            <ul>
+              <li>Username <input type="text" name="username" required></li>
+              <li>Password&nbsp; <input type="password" name="password" required></li>
+            </ul>
+            <button class="btn" type="submit">Submit</button>
+          </form>
+          
+          <% if (error) { %>
+            <h3 style="color: red;"><%= error %></h3>
+          <% } %>
+
         </div>
       </div>
     </section>

@@ -15,14 +15,7 @@
           <li><a href="/">Home</a></li>
           <% if (user) { %>
             <li><a href="/profile">Profile</a></li>
-            <li>
-              <form action="/users/logout" method="POST" style="display: inline;">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit" class="btn-link">Logout</button>
-              </form>
-            </li>
           <% } else { %>
-            <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
           <% } %>
@@ -39,9 +32,10 @@
     <section class="trivia-games">
       <h2>Stats</h2>
       <div class="trivia-games-grid">
-        <div class="answers">
+        <div class="answers-correct">
           <h3>Number Correct</h3>
           <%= score %> out of <%= total%>
+          <br>
           <a href="/" class="btn">Go Back Home</a>
         </div>
       </div>

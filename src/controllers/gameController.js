@@ -251,7 +251,7 @@ exports.loadGame = (req, res) => {
 
   res.render('gamescreen', {
   title: req.params.category.charAt(0).toUpperCase() + req.params.category.substring(1),
-         question
+  question
   });
 };
 
@@ -268,6 +268,10 @@ exports.checkAnswer = (req, res) => {
   //Check if the answer was correct
   if(answer === question.answer) {
     req.session.gameData.correct++;
+    req.session.user.right++;
+  }
+  else {
+    req.session.user.wrong++;
   }
   req.session.gameData.currIndex++;
 
@@ -277,13 +281,14 @@ exports.checkAnswer = (req, res) => {
     const score = req.session.gameData.correct;
     const total = questions.length
     delete req.session.gameData;
+    req.session.user.gamesPlayed++;
     return res.render('gameover', {title: "Game Over", score, total});
   }
 
   question = questions[req.session.gameData.currIndex];
   res.render('gamescreen', {
   title: req.params.category.charAt(0).toUpperCase() + req.params.category.substring(1),
-         question
+  question
   });
 };
 

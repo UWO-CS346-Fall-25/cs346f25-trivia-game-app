@@ -71,6 +71,12 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed architecture information.
 
 ## Development
 
+Week 9 -> Added working login and register forms that save user data as session variables, and are lost on refresh or logout. We also added very basic statistics in the profile page, such as games played, win/loss ratio, etc. Favorite category will be implemented soon. Updated UI improvements include these profile, added registration errors, and a fixed gameover stats page.
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
 ### Available Scripts
 
 - `npm start`: Start the production server

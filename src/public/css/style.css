@@ -137,6 +137,15 @@ main {
   font-size: 1.25rem;
 }
 
+.profile-hero {
+  text-align: center;
+  padding: 3rem 0;
+  background: rgb(82, 149, 255);
+  color: white;
+  border-radius: var(--border-radius);
+  margin-bottom: 2rem;
+}
+
 /* Trivia Section */
 .trivia-games {
   margin: 3rem 0;
@@ -155,6 +164,7 @@ main {
   margin-bottom: 2rem;
 }
 
+/*trivia game */
 .trivia-game {
   padding: 2rem;
   background-color: var(--light-color);
@@ -173,6 +183,37 @@ main {
   margin-right: 0;
 }
 
+#movie-trivia {
+  background-color: #ff8793;
+}
+
+#history-trivia {
+  background-color: rgb(255, 255, 172);
+}
+
+#politic-trivia {
+  background-color: rgb(255, 235, 106);
+}
+
+#art-trivia {
+  background-color: rgb(255, 160, 223);
+}
+
+#mythology-trivia {
+  background-color: #b6f5ff;
+}
+
+#animal-trivia {
+  background-color: rgb(253, 194, 86);
+}
+
+#sports-trivia {
+  background-color: #bbb5ff;
+}
+
+#geography-trivia {
+  background-color: #b3ffc5;
+}
 
 /* Playing Game Section */
 .answers {
@@ -180,6 +221,15 @@ main {
   background-color: var(--light-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
+}
+
+.answers-correct {
+  padding: 2rem;
+  background-color: var(--light-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  font-size: 300%;
 }
 
 .answers ul {
@@ -215,6 +265,9 @@ main {
   place-items: center;
 }
 
+.user-input h3 {
+  text-align: center;
+}
 
 /* Account Section*/
 .account {
