@@ -212,5 +212,17 @@ async function submitGame() {
   }
 }
 
+//Code to prevent users not logged in from playing
+document.addEventListener("click", (event) => {
+  if (event.target && event.target.id === "game") {
+    const isLoggedIn = event.target.value === "true";
+    if (!isLoggedIn) {
+      event.preventDefault(); 
+      alert("Please log in or register before playing a game!");
+      return;
+    }
+  }
+});
+
 // Export functions if using modules
 // export { validateForm, makeRequest, showNotification };
