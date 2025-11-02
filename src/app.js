@@ -80,6 +80,10 @@ app.use((req, res, next) => {
 const gameRouter = require('./routes/gamescreen');
 app.use('/gamescreen', gameRouter);
 
+const userRouter = require('./routes/users');
+app.use('/profile', userRouter);
+app.use('/users/logout', userRouter);
+
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {
   res.render('index', {

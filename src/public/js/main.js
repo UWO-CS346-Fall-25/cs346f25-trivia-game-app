@@ -189,18 +189,19 @@ function showNotification(message, type = 'info') {
 document.addEventListener("click", async (event) => {
   if(event.target && event.target.id === "submitAnswer") {
     event.preventDefault();
-    await submit();
+    await submitGame();
   }
 });
 
 
-async function submit() {
+async function submitGame() {
   selected = document.querySelector('input[name="choice"]:checked');
   if(selected) {
     choice = selected.value;
     const response = await fetch("/gamescreen/movies/check", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: { "Content-Type": "application/x-www-form-urlencoded"
+               },
       body: new URLSearchParams({ answer: choice })
     });
     const html = await response.text();

@@ -22,7 +22,6 @@
               </form>
             </li>
           <% } else { %>
-            <li><a href="/profile">Profile</a></li> <!-- Here for demo purposes while users aren't implented -->
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
           <% } %>
@@ -33,8 +32,8 @@
 
   <main class="container">
     <section class="hero">
-      <h1>Account Name</h1>
-      <p>Account age</p>
+      <h1><%= user %></h1>
+      <p>Date Created: <%= date %></p>
     </section>
 
     <h2 id="account-h2">Account</h2>
@@ -61,22 +60,14 @@
         </div>
       </div>
       <div class="account-information">
-        <div class="information">
-          <h3>Account Information</h3>
-          <ul>
-            <li>Name</li>
-            <li>Date of creation</li>
-            <li>Other relevent information</li>
-          </ul>
-        </div>
         <div class="Stats">
           <h3>Stats</h3>
           <ul>
-            <li>Games played</li>
+            <li>Games played: <%= total %></li>
             <li>Favorite trivia</li>
-            <li>Questions answered right</li>
-            <li>Questions answered wrong</li>
-            <li>Right to wrong ratio</li>
+            <li>Questions answered right: <%= right %></li>
+            <li>Questions answered wrong: <%= wrong %></li>
+            <li>Right to wrong ratio: <%= ratio %>%</li>
           </ul>
         </div>
       </div>

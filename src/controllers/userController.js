@@ -16,9 +16,10 @@
  * Display registration form
  */
 exports.getRegister = (req, res) => {
-  res.render('users/register', {
+  res.render('register', {
+    user: req.session.user,
     title: 'Register',
-    csrfToken: req.csrfToken(),
+    error: null
   });
 };
 
@@ -28,18 +29,27 @@ exports.getRegister = (req, res) => {
  */
 exports.postRegister = async (req, res, next) => {
   try {
-    // const { username, email, password } = req.body;
+    const { username, password } = req.body;
+    console.log('Username:', username, 'Password:', password);
 
-    // Validate input
-    // Hash password
-    // Create user in database
-    // const user = await User.create({ username, email, password: hashedPassword });
+    //Basic password checking
+    if (password.length < 6) {
+      return res.render('register', {
+        title: 'Register',
+        error: 'Password must be at least 6 characters long.',
+        user: req.session.user, 
+        csrfToken: req.session.csrfToken,
+      });
+    }
 
-    // Set session
-    // req.session.user = { id: user.id, username: user.username };
+    //If it's valid, create a user profile (very basic at this point)
+    req.session.user = {
+      username,
+      password,
+      creation: Date.now(),
+    };
 
-    // Redirect to home or dashboard
-    res.redirect('/');
+    return res.redirect('/');
   } catch (error) {
     next(error);
   }
@@ -51,6 +61,7 @@ exports.postRegister = async (req, res, next) => {
  */
 exports.getLogin = (req, res) => {
   res.render('login', {
+    user: req.session.user,
     title: 'Login',
   });
 };
@@ -59,35 +70,23 @@ exports.getLogin = (req, res) => {
  * POST /users/login
  * Process login form
  */
-exports.postLogin = async (req, res, next) => {
+exports.postLogin = (req, res, next) => {
   try {
     const { username, password } = req.body;
+    console.log('Username:', username, 'Password:', password);
 
+    //Redirects to home after logging in, sets account variables
     if (username && password) {
-      req.session.username = username;
-      res.redirect('profile');
+      req.session.user = { username, password };
+      req.session.user.creation = Date.now();
+      req.session.user.gamesPlayed = 0;
+      req.session.user.right = 0;
+      req.session.user.wrong = 0;
+      return res.redirect('/');
     }
-    else {
-      res.redirect('login');
-    }
 
-    // Find user by email
-    // const user = await User.findByEmail(email);
-
-    // Verify password
-    // if (!user || !await verifyPassword(password, user.password)) {
-    //   return res.render('users/login', {
-    //     title: 'Login',
-    //     error: 'Invalid credentials',
-    //     csrfToken: req.csrfToken(),
-    //   });
-    // }
-
-    // Set session
-    // req.session.user = { id: user.id, username: user.username };
-
-    // Redirect to home or dashboard
-    //res.redirect('/');
+    // Just in case, requires the user to login again
+    return res.redirect('/login');
   } catch (error) {
     next(error);
   }
@@ -107,8 +106,32 @@ exports.postLogout = (req, res) => {
 };
 
 exports.getProfile = (req, res) => {
-  const username = req.session.username || 'Guest';
-  res.render('profile', {title: 'profile', user: req.session.username });
+  const user = req.session.user;
+
+  const creationDate = new Date(req.session.user.creation).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  let ratio = 0;
+
+  if(req.session.user.wrong > 0) {
+    ratio = ((req.session.user.right / (req.session.user.wrong + req.session.user.right)) * 100);
+    ratio = ratio.toFixed(2);
+  }
+  
+
+  res.render('profile', {
+    title: 'Profile',
+    user: user.username,
+    date: creationDate,
+    csrfToken: req.session.csrfToken,
+    total: req.session.user.gamesPlayed,
+    right: req.session.user.right,
+    wrong: req.session.user.wrong,
+    ratio: ratio || 0
+  });
 };
 
 // Add more controller methods as needed

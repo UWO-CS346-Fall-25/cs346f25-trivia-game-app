@@ -215,6 +215,9 @@ main {
   place-items: center;
 }
 
+.user-input h3 {
+  text-align: center;
+}
 
 /* Account Section*/
 .account {
