@@ -9,12 +9,18 @@
  * - Error handling
  */
 
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
 const session = require('express-session');
 const csrf = require('csurf');
 const userRoutes = require('../src/routes/users');
+
+//Supabase instantiation 
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(process.env.SUPABASE_URL,
+process.env.SUPABASE_ANON_KEY);
 
 // Initialize Express app
 const app = express();
@@ -157,4 +163,4 @@ app.use((err, req, res, _next) => {
   });
 });
 
-module.exports = app;
+module.exports = {app, supabase};
