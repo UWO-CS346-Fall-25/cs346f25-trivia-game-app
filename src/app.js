@@ -21,6 +21,7 @@ const userRoutes = require('../src/routes/users');
 const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient(process.env.SUPABASE_URL,
 process.env.SUPABASE_ANON_KEY);
+module.exports = supabase;
 
 // Initialize Express app
 const app = express();
@@ -163,4 +164,4 @@ app.use((err, req, res, _next) => {
   });
 });
 
-module.exports = {app, supabase};
+module.exports = app;
