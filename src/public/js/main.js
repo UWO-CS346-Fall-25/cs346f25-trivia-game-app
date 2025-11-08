@@ -187,7 +187,7 @@ function showNotification(message, type = 'info') {
 
 //Button Listener for game page
 document.addEventListener("click", async (event) => {
-  if(event.target && event.target.id === "submitAnswer") {
+  if (event.target && event.target.id === "submitAnswer") {
     event.preventDefault();
     await submitGame();
   }
@@ -196,12 +196,13 @@ document.addEventListener("click", async (event) => {
 
 async function submitGame() {
   selected = document.querySelector('input[name="choice"]:checked');
-  if(selected) {
+  if (selected) {
     choice = selected.value;
     const response = await fetch("/gamescreen/movies/check", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded"
-               },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
       body: new URLSearchParams({ answer: choice })
     });
     const html = await response.text();
@@ -217,11 +218,33 @@ document.addEventListener("click", (event) => {
   if (event.target && event.target.id === "game") {
     const isLoggedIn = event.target.value === "true";
     if (!isLoggedIn) {
-      event.preventDefault(); 
+      event.preventDefault();
       alert("Please log in or register before playing a game!");
       return;
     }
   }
+});
+
+
+document.getElementById("add-question").addEventListener("click", () => {
+  const container = document.getElementById("question-container");
+  const template = document.getElementById("question-template");
+  const index = container.querySelectorAll(".question-block").length;
+
+  const clone = template.content.cloneNode(true);
+
+  clone.querySelectorAll("input").forEach(input => {
+    const field = input.getAttribute("data-field");
+    if (field === "correct_answer") {
+      input.name = `questions[${index}][correct_answer]`;
+      input.checked = false;
+    } else {
+      input.name = `questions[${index}][${field}]`;
+      input.value = "";
+    }
+  });
+
+  container.appendChild(clone);
 });
 
 // Export functions if using modules

@@ -20,7 +20,7 @@ const userRoutes = require('../src/routes/users');
 //Supabase instantiation 
 const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient(process.env.SUPABASE_URL,
-process.env.SUPABASE_ANON_KEY);
+  process.env.SUPABASE_ANON_KEY);
 module.exports = supabase;
 
 // Initialize Express app
@@ -90,6 +90,9 @@ app.use('/gamescreen', gameRouter);
 const userRouter = require('./routes/users');
 app.use('/profile', userRouter);
 app.use('/users/logout', userRouter);
+
+const createRouter = require('./routes/create');
+app.use('/create', createRouter);
 
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {

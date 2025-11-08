@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %> | Trivia
+  </title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="container">
+        <a href="/" class="logo">Trivia</a>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <% if (user) { %>
+            <li><a href="/profile">Profile</a></li>
+            <% } else { %>
+              <li><a href="/login">Login</a></li>
+              <li><a href="/register">Register</a></li>
+              <% } %>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Create a New Game</h1>
+      <p>Complete the required fields below</p>
+    </section>
+    <form action="/create/add" method="POST">
+      <label for="title">Game Title:</label>
+      <input type="text" id="title" name="title" required>
+      <br>
+      <label for="description">Description:</label>
+      <input type="text" id="description" name="description" required>
+
+      <br>
+      <h2>Questions</h2>
+      <h3>Select which answer is correct</h3>
+      <div id="question-container">
+        <div class="question-block">
+          <label>Question:</label>
+          <input type="text" name="questions[0][question]" required><br>
+
+          <label>Option A:</label>
+          <input type="text" name="questions[0][option_a]" required>
+          <input type="radio" name="questions[0][correct_answer]" value="A" required> Correct?<br>
+
+          <label>Option B:</label>
+          <input type="text" name="questions[0][option_b]" required>
+          <input type="radio" name="questions[0][correct_answer]" value="B"> Correct?<br>
+
+          <label>Option C:</label>
+          <input type="text" name="questions[0][option_c]" required>
+          <input type="radio" name="questions[0][correct_answer]" value="C"> Correct?<br>
+
+          <label>Option D:</label>
+          <input type="text" name="questions[0][option_d]" required>
+          <input type="radio" name="questions[0][correct_answer]" value="D"> Correct?<br>
+          <br>
+          <hr>
+          <br>
+        </div>
+      </div>
+
+      <template id="question-template">
+        <div class="question-block">
+          <label>Question:</label>
+          <input type="text" data-field="question" required><br>
+
+          <label>Option A:</label>
+          <input type="text" data-field="option_a" required>
+          <input type="radio" data-field="correct_answer" value="A" required> Correct?<br>
+
+          <label>Option B:</label>
+          <input type="text" data-field="option_b" required>
+          <input type="radio" data-field="correct_answer" value="B"> Correct?<br>
+
+          <label>Option C:</label>
+          <input type="text" data-field="option_c" required>
+          <input type="radio" data-field="correct_answer" value="C"> Correct?<br>
+
+          <label>Option D:</label>
+          <input type="text" data-field="option_d" required>
+          <input type="radio" data-field="correct_answer" value="D"> Correct?<br>
+          <br>
+          <hr>
+          <br>
+        </div>
+      </template>
+
+      <button type="button" id="add-question" class="btn">Add Question</button>
+      <button type="submit" class="btn">Create Game</button>
+    </form>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 CS346 Trivia Project. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+
+</html>

@@ -37,7 +37,7 @@ exports.postRegister = async (req, res, next) => {
       return res.render('register', {
         title: 'Register',
         error: 'Password must be at least 6 characters long.',
-        user: req.session.user, 
+        user: req.session.user,
         csrfToken: req.session.csrfToken,
       });
     }
@@ -73,7 +73,6 @@ exports.getLogin = (req, res) => {
 exports.postLogin = (req, res, next) => {
   try {
     const { username, password } = req.body;
-    console.log('Username:', username, 'Password:', password);
 
     //Redirects to home after logging in, sets account variables
     if (username && password) {
@@ -116,11 +115,11 @@ exports.getProfile = (req, res) => {
 
   let ratio = 0;
 
-  if(req.session.user.wrong > 0) {
+  if (req.session.user.wrong > 0) {
     ratio = ((req.session.user.right / (req.session.user.wrong + req.session.user.right)) * 100);
     ratio = ratio.toFixed(2);
   }
-  
+
 
   res.render('profile', {
     title: 'Profile',
