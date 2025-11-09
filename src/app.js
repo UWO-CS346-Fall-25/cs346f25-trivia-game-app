@@ -9,12 +9,19 @@
  * - Error handling
  */
 
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
 const session = require('express-session');
 const csrf = require('csurf');
 const userRoutes = require('../src/routes/users');
+
+//Supabase instantiation 
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY);
+module.exports = supabase;
 
 // Initialize Express app
 const app = express();
@@ -78,11 +85,18 @@ app.use((req, res, next) => {
 
 //New routes
 const gameRouter = require('./routes/gamescreen');
-app.use('/gamescreen', gameRouter);
+app.use('/gamescreen', csrfProtection, gameRouter);
 
 const userRouter = require('./routes/users');
 app.use('/profile', userRouter);
 app.use('/users/logout', userRouter);
+
+const createRouter = require('./routes/create');
+app.use('/create', createRouter);
+
+const homeRouter = require('./routes/index');
+const csurf = require('csurf');
+app.use('/', csrfProtection, homeRouter);
 
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {

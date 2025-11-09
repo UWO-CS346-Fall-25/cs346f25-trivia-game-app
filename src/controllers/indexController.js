@@ -13,6 +13,8 @@
 
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
+const supabase = require('../app');
+
 
 /**
  * GET /
@@ -20,18 +22,25 @@
  */
 exports.getHome = async (req, res, next) => {
   try {
-    // Fetch any data needed for the home page
-    // const data = await SomeModel.findAll();
+    const { data, error } = await supabase
+      .from('games')
+      .select('id, title, description, slug')
+
+    if (error) {
+      console.error('Error fetching games:', error);
+    }
 
     res.render('index', {
-      title: 'Home',
-      // data: data,
-      csrfToken: req.csrfToken(),
+      title: 'Trivia Home',
+      data,
+      user: req.session.user || null,
+      csrfToken: req.csrfToken()
     });
+
   } catch (error) {
     next(error);
   }
-};
+}
 
 /**
  * GET /about

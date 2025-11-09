@@ -1,13 +1,8 @@
 /**
- * Index Routes
+ * Game Routes
  *
- * Define routes for the main pages of your application here.
  * Routes connect HTTP requests to controller functions.
  *
- * Example usage:
- * const express = require('express');
- * const router = express.Router();
- * const indexController = require('../controllers/indexController');
  *
  * router.get('/', indexController.getHome);
  * router.get('/about', indexController.getAbout);
@@ -17,9 +12,10 @@
 
 const express = require('express');
 const router = express.Router();
-const homeController = require('../controllers/indexController');
-router.get('/', homeController.getHome);
-
+const createController = require('../controllers/createController');
+const { addGame } = require('../controllers/createController');
+router.get('/', createController.loadCreate);
+router.post('/add', createController.addGame);
 
 // Import controllers
 // const indexController = require('../controllers/indexController');

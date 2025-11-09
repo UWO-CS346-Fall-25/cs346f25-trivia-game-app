@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Trivia</title>
+  <title>
+    <%= title %> | Trivia
+  </title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
   <header>
     <nav>
@@ -21,10 +25,10 @@
                 <button type="submit" class="btn-link">Logout</button>
               </form>
             </li>
-          <% } else { %>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-          <% } %>
+            <% } else { %>
+              <li><a href="/login">Login</a></li>
+              <li><a href="/register">Register</a></li>
+              <% } %>
         </ul>
       </div>
     </nav>
@@ -38,40 +42,28 @@
 
     <section class="trivia-games">
       <h2>Game Selection</h2>
-      <div class="trivia-games-grid">
-        <div class="trivia-game" id="movie-trivia">
-          <h3>Movies</h3>
-          <p><a href="/gamescreen/movies"><button class="btn" value="<%= user ? 'true' : 'false' %>" id="game">Play</button></a></p>
-        </div>
-        <div class="trivia-game" id="history-trivia">
-          <h3>History</h3>
-          <p><a href="/gamescreen/history"><button class="btn" value="<%= user ? 'true' : 'false' %>" id="game">Play</button></a></p>
-        </div>
-        <div class="trivia-game" id="politic-trivia">
-          <h3>Politics</h3>
-          <p><a href="/gamescreen/politics"><button class="btn" value="<%= user ? 'true' : 'false' %>" id="game">Play</button></a></p>
-        </div>
-        <div class="trivia-game" id="art-trivia">
-          <h3>Art</h3>
-          <p><a href="/gamescreen/art"><button class="btn" value="<%= user ? 'true' : 'false' %>" id="game">Play</button></a></p>
-        </div>
-        <div class="trivia-game" id="mythology-trivia">
-          <h3>Mythology</h3>
-          <p><a href="/gamescreen/mythology"><button class="btn" value="<%= user ? 'true' : 'false' %>" id="game">Play</button></a></p>
-        </div>
-        <div class="trivia-game" id="animal-trivia">
-          <h3>Animals</h3>
-          <p><a href="/gamescreen/animals"><button class="btn" value="<%= user ? 'true' : 'false' %>" id="game">Play</button></a></p>
-        </div>
-        <div class="trivia-game" id="sports-trivia">
-          <h3>Sports</h3>
-          <p><a href="/gamescreen/sports"><button class="btn" value="<%= user ? 'true' : 'false' %>" id="game">Play</button></a></p>
-        </div>
-        <div class="trivia-game" id="geography-trivia">
-          <h3>Geography</h3>
-          <p><a href="/gamescreen/geography"><button class="btn" value="<%= user ? 'true' : 'false' %>" id="game">Play</button></a></p>
-        </div>
-      </div>
+      <% if (user) { %>
+        <a href="/create"><button class="btn">Create a new Game</button></a>
+        <% } %>
+          <div class="trivia-games-grid">
+            <% data.forEach(game=> { %>
+              <div class="trivia-game">
+                <h3>
+                  <%= game.title %>
+                </h3>
+                <p>
+                  <%= game.description %>
+                </p>
+                <p>
+                  <a href="/gamescreen/<%= game.slug %>">
+                    <% if (user) { %>
+                      <button class="btn">Play</button>
+                      <% } %>
+                  </a>
+                </p>
+              </div>
+              <% }) %>
+          </div>
     </section>
 
     <section class="leaderboard">
@@ -95,4 +87,5 @@
 
   <script src="/js/main.js"></script>
 </body>
+
 </html>

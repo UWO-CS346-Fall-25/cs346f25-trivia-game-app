@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Trivia</title>
+  <title>
+    <%= title %> | Trivia
+  </title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
   <header>
     <nav>
@@ -15,10 +19,10 @@
           <li><a href="/">Home</a></li>
           <% if (user) { %>
             <li><a href="/profile">Profile</a></li>
-          <% } else { %>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-          <% } %>
+            <% } else { %>
+              <li><a href="/login">Login</a></li>
+              <li><a href="/register">Register</a></li>
+              <% } %>
         </ul>
       </div>
     </nav>
@@ -26,31 +30,50 @@
 
   <main class="container">
     <section class="hero">
-      <h1><%= title%></h1>
+      <h1>
+        <%= title%>
+      </h1>
       <p>Choose the best answer below</p>
     </section>
     <section class="trivia-games">
-      <h2> <%= question.question %></h2>
-      <div class="trivia-games-grid">
+      <form id="answerForm">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <h2>
+          <%= question.question %>
+        </h2>
         <div class="answers">
           <h3>Choices</h3>
           <ul>
-            <li><input type="radio" name="choice" id="first" value="<%= question.choices[0] %>"> <%= question.choices[0] %> </li>
-            <li><input type="radio" name="choice" id="second" value="<%= question.choices[1] %>"> <%= question.choices[1] %></li>
-            <li><input type="radio" name="choice" id="third" value="<%= question.choices[2] %>"> <%= question.choices[2] %></li>
-            <li><input type="radio" name="choice" id="fourth" value="<%= question.choices[3] %>"> <%= question.choices[3] %></li>
+            <li>
+              <input type="radio" name="selectedAnswer" value="A" required>
+              <%= question.option_a %>
+            </li>
+            <li>
+              <input type="radio" name="selectedAnswer" value="B">
+              <%= question.option_b %>
+            </li>
+            <li>
+              <input type="radio" name="selectedAnswer" value="C">
+              <%= question.option_c %>
+            </li>
+            <li>
+              <input type="radio" name="selectedAnswer" value="D">
+              <%= question.option_d %>
+            </li>
           </ul>
+          <input type="hidden" name="question_id" value="<%= question.id %>">
           <button class="btn" id="submitAnswer">Submit</button>
         </div>
-      </div>
+      </form>
     </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 CS346 Trivia Project. All rights reserved.</p>
-    </div>
-  </footer>
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 CS346 Trivia Project. All rights reserved.</p>
+      </div>
+    </footer>
 
-  <script src="/js/main.js"></script>
+    <script src="/js/main.js"></script>
 </body>
+
 </html>

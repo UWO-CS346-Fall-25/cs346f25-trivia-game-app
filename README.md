@@ -43,6 +43,7 @@ based on if the user in logged in.
    ```bash
    # Create database (adjust credentials as needed)
    createdb your_database_name
+   # Run SQL code found in /db/schema.sql and /db/populate.sql in supabase to set up and populate tables
    ```
 
 5. **Run migrations**
