@@ -13,8 +13,8 @@
 const express = require('express');
 const router = express.Router();
 const gameController = require('../controllers/gameController');
-router.get('/:category', gameController.loadGame);
-router.post('/:category/check', gameController.checkAnswer);
+router.get('/:slug', gameController.loadGame);
+router.post('/check', gameController.checkAnswer);
 
 // Import controllers
 // const indexController = require('../controllers/indexController');

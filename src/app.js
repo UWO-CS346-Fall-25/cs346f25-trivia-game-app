@@ -85,7 +85,7 @@ app.use((req, res, next) => {
 
 //New routes
 const gameRouter = require('./routes/gamescreen');
-app.use('/gamescreen', gameRouter);
+app.use('/gamescreen', csrfProtection, gameRouter);
 
 const userRouter = require('./routes/users');
 app.use('/profile', userRouter);
@@ -93,6 +93,10 @@ app.use('/users/logout', userRouter);
 
 const createRouter = require('./routes/create');
 app.use('/create', createRouter);
+
+const homeRouter = require('./routes/index');
+const csurf = require('csurf');
+app.use('/', csrfProtection, homeRouter);
 
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {

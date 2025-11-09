@@ -185,7 +185,6 @@ function showNotification(message, type = 'info') {
   }, 3000);
 }
 
-//Button Listener for game page
 document.addEventListener("click", async (event) => {
   if (event.target && event.target.id === "submitAnswer") {
     event.preventDefault();
@@ -193,37 +192,31 @@ document.addEventListener("click", async (event) => {
   }
 });
 
-
 async function submitGame() {
-  selected = document.querySelector('input[name="choice"]:checked');
-  if (selected) {
-    choice = selected.value;
-    const response = await fetch("/gamescreen/movies/check", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: new URLSearchParams({ answer: choice })
-    });
-    const html = await response.text();
-    document.body.innerHTML = html;
+  const selected = document.querySelector('input[name="selectedAnswer"]:checked');
+  const questionId = document.querySelector('input[name="question_id"]').value;
+
+  if (!selected) {
+    alert("Choose an answer!");
+    return;
   }
-  else {
-    alert("Choose An Answer!")
-  }
+
+  const choice = selected.value;
+  const token = document.querySelector('input[name="_csrf"]').value;
+
+  const response = await fetch("/gamescreen/check", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded", 'CSRF-Token': token },
+    body: new URLSearchParams({
+      selectedAnswer: choice,
+      question_id: questionId,
+    })
+  });
+
+  const html = await response.text();
+  document.body.innerHTML = html;
 }
 
-//Code to prevent users not logged in from playing
-document.addEventListener("click", (event) => {
-  if (event.target && event.target.id === "game") {
-    const isLoggedIn = event.target.value === "true";
-    if (!isLoggedIn) {
-      event.preventDefault();
-      alert("Please log in or register before playing a game!");
-      return;
-    }
-  }
-});
 
 
 document.getElementById("add-question").addEventListener("click", () => {
