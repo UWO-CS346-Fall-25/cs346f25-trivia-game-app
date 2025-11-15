@@ -13,7 +13,7 @@
 const express = require('express');
 const router = express.Router();
 const createController = require('../controllers/createController');
-const { addGame } = require('../controllers/createController');
+
 router.get('/', createController.loadCreate);
 router.post('/add', createController.addGame);
 

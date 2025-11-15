@@ -14,7 +14,8 @@
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
 
-const supabase = require('../app');
+const supabase = require('../supabase');
+
 
 /**
  * GET /
@@ -61,6 +62,8 @@ exports.loadGame = async (req, res) => {
     question.option_c,
     question.option_d
   ];
+
+  req.session.title = game.title;
 
   res.render('gamescreen', {
     title: game.title,
@@ -127,7 +130,7 @@ exports.checkAnswer = async (req, res) => {
   ];
 
   res.render('gamescreen', {
-    title: "Next Question",
+    title: req.session.title,
     question: nextQuestion,
     csrfToken: req.csrfToken()
   });

@@ -10,6 +10,8 @@
 
 // Import models
 // const User = require('../models/User');
+const { contentSecurityPolicy } = require('helmet');
+const supabase = require('../supabase');
 
 /**
  * GET /users/register
@@ -19,7 +21,8 @@ exports.getRegister = (req, res) => {
   res.render('register', {
     user: req.session.user,
     title: 'Register',
-    error: null
+    error: null,
+    csrfToken: req.csrfToken()
   });
 };
 
@@ -29,8 +32,7 @@ exports.getRegister = (req, res) => {
  */
 exports.postRegister = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
-    console.log('Username:', username, 'Password:', password);
+    const { username, email, password } = req.body;
 
     //Basic password checking
     if (password.length < 6) {
@@ -38,16 +40,31 @@ exports.postRegister = async (req, res, next) => {
         title: 'Register',
         error: 'Password must be at least 6 characters long.',
         user: req.session.user,
-        csrfToken: req.session.csrfToken,
+        csrfToken: req.csrfToken()
       });
     }
 
     //If it's valid, create a user profile (very basic at this point)
+    const { data, error: insertionError } = await supabase
+      .from('users')
+      .insert([
+              { username: username, email: email, password_hash: password },
+          ])
+      .select();
+
     req.session.user = {
       username,
-      password,
       creation: Date.now(),
     };
+
+    if (insertionError) {
+      return res.render('register', {
+        title: 'Register',
+        error: "Username is already taken",
+        user: req.session.user,
+        csrfToken: req.csrfToken()
+      });
+    }
 
     return res.redirect('/');
   } catch (error) {
@@ -63,6 +80,8 @@ exports.getLogin = (req, res) => {
   res.render('login', {
     user: req.session.user,
     title: 'Login',
+    csrfToken: req.csrfToken(),
+    error: null
   });
 };
 
@@ -70,22 +89,50 @@ exports.getLogin = (req, res) => {
  * POST /users/login
  * Process login form
  */
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    let loginError = null;
 
     //Redirects to home after logging in, sets account variables
     if (username && password) {
-      req.session.user = { username, password };
+      const { data: profile, error: queryError } = await supabase
+        .from('users')
+        .select('id, password_hash')
+        .eq('username', username)
+        .single();
+      
+      if(profile) {
+        if(password !== profile.password_hash) {
+          loginError = "Incorrect Password";
+        }
+      }
+      else {
+        loginError = "Username not Found";
+      }
+    }
+    else {
+      loginError = "Invalid username or password";
+    }
+
+    // Some error occured when logging in, resend the page with an error message
+    if(loginError) {
+      res.render('login', {
+        user: null,
+        title: 'Login',
+        csrfToken: req.csrfToken(),
+        error: loginError
+      });
+    } 
+    else {
+      req.session.user = { username };
       req.session.user.creation = Date.now();
       req.session.user.gamesPlayed = 0;
       req.session.user.right = 0;
       req.session.user.wrong = 0;
       return res.redirect('/');
     }
-
-    // Just in case, requires the user to login again
-    return res.redirect('/login');
+    
   } catch (error) {
     next(error);
   }

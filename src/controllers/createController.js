@@ -13,7 +13,8 @@
 
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
-const supabase = require('../app');
+const supabase = require('../supabase');
+
 
 /**
  * GET /

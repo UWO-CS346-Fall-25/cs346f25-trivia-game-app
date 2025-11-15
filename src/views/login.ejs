@@ -31,12 +31,17 @@
         <div class="user-input">
           <h2>Login</h2>
           <form action="/login" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <ul>
               <li>Username <input type="text" name="username" required></li>
               <li>Password&nbsp; <input type="password" name="password" required></li>
             </ul>
             <button class="btn" type="submit">Login</button>
           </form>
+
+          <% if (error) { %>
+            <h3 style="color: red;"><%= error %></h3>
+          <% } %>
         </div>
       </div>
     </section>

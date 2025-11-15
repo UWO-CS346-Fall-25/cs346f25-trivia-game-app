@@ -31,8 +31,10 @@
         <div class="user-input">
           <h2>Create an Account</h2>
           <form action="/register" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <ul>
               <li>Username <input type="text" name="username" required></li>
+              <li>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="email" required></li>
               <li>Password&nbsp; <input type="password" name="password" required></li>
             </ul>
             <button class="btn" type="submit">Submit</button>
