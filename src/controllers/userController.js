@@ -12,6 +12,7 @@
 // const User = require('../models/User');
 const { contentSecurityPolicy } = require('helmet');
 const supabase = require('../supabase');
+const bcrypt = require('bcrypt');
 
 /**
  * GET /users/register
@@ -44,11 +45,12 @@ exports.postRegister = async (req, res, next) => {
       });
     }
 
-    //If it's valid, create a user profile (very basic at this point)
+    //If it's valid, hash password and store data
+    let hashedPassword = await bcrypt.hash(password, 10);
     const { data, error: insertionError } = await supabase
       .from('users')
       .insert([
-              { username: username, email: email, password_hash: password },
+              { username: username, email: email, password_hash: hashedPassword },
           ])
       .select();
 
@@ -103,7 +105,8 @@ exports.postLogin = async (req, res, next) => {
         .single();
       
       if(profile) {
-        if(password !== profile.password_hash) {
+        let equalPW = await bcrypt.compare(password, profile.password_hash);
+        if(!equalPW) {
           loginError = "Incorrect Password";
         }
       }
@@ -172,7 +175,7 @@ exports.getProfile = (req, res) => {
     title: 'Profile',
     user: user.username,
     date: creationDate,
-    csrfToken: req.session.csrfToken,
+    csrfToken: req.csrfToken(),
     total: req.session.user.gamesPlayed,
     right: req.session.user.right,
     wrong: req.session.user.wrong,
