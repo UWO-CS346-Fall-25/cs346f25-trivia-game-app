@@ -45,6 +45,16 @@ exports.postRegister = async (req, res, next) => {
       });
     }
 
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!validEmail.test(email)) {
+      return res.render('register', {
+        title: 'Register',
+        error: 'Enter a valid email',
+        user: req.session.user,
+        csrfToken: req.csrfToken()
+      });
+    }
+
     //If it's valid, hash password and store data
     let hashedPassword = await bcrypt.hash(password, 10);
     const { data, error: insertionError } = await supabase
