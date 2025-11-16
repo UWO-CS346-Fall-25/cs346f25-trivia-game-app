@@ -219,26 +219,66 @@ async function submitGame() {
 
 
 
-document.getElementById("add-question").addEventListener("click", () => {
-  const container = document.getElementById("question-container");
-  const template = document.getElementById("question-template");
-  const index = container.querySelectorAll(".question-block").length;
+const addQuestionBtn = document.getElementById("add-question");
+if (addQuestionBtn) {
+  addQuestionBtn.addEventListener("click", () => {
+    const container = document.getElementById("question-container");
+    const template = document.getElementById("question-template");
+    const index = container.querySelectorAll(".question-block").length;
 
-  const clone = template.content.cloneNode(true);
+    const clone = template.content.cloneNode(true);
 
-  clone.querySelectorAll("input").forEach(input => {
-    const field = input.getAttribute("data-field");
-    if (field === "correct_answer") {
-      input.name = `questions[${index}][correct_answer]`;
-      input.checked = false;
-    } else {
-      input.name = `questions[${index}][${field}]`;
-      input.value = "";
-    }
+    clone.querySelectorAll("input").forEach(input => {
+      const field = input.getAttribute("data-field");
+      if (field === "correct_answer") {
+        input.name = `questions[${index}][correct_answer]`;
+        input.checked = false;
+      } else {
+        input.name = `questions[${index}][${field}]`;
+        input.value = "";
+      }
+    });
+
+    container.appendChild(clone);
   });
+}
 
-  container.appendChild(clone);
+
+document.addEventListener("DOMContentLoaded", () => { 
+  const passwordInput = document.getElementById("password");
+  const meter = document.getElementById("password-meter");
+
+  if(!passwordInput || !meter) {
+    return;
+  }
+
+  passwordInput.addEventListener("input", () => {
+    const val = passwordInput.value;
+    if(!val) {
+      meter.value = 0;
+      return;
+    }
+
+    const score = findScore(val);
+    meter.value = score;
+  });
 });
+
+function findScore(pw) {
+  let score = 0;
+
+  if(pw.length >= 6) score++;
+  if(pw.length >= 10) score++;
+  if(/[a-z]/.test(pw)) score++;
+  if(/[A-Z]/.test(pw)) score++;
+  if(/[0-9]/.test(pw)) score++;
+
+  if(score <= 1) return 0;
+  else if(score === 2) return 1;
+  else if(score === 3) return 2;
+  else if(score === 4) return 3;
+  else return 4;
+}
 
 // Export functions if using modules
 // export { validateForm, makeRequest, showNotification };

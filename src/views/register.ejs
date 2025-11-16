@@ -10,16 +10,7 @@
   <header>
     <nav>
       <div class="container">
-        <a href="/" class="logo">Trivia</a>
-        <ul class="nav-links">
-          <li><a href="/">Home</a></li>
-          <% if (user) { %>
-            <li><a href="/profile">Profile</a></li>
-          <% } else { %>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-          <% } %>
-        </ul>
+        <a class="logo">Trivia</a>
       </div>
     </nav>
   </header>
@@ -35,7 +26,9 @@
             <ul>
               <li>Username <input type="text" name="username" required></li>
               <li>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="email" required></li>
-              <li>Password&nbsp; <input type="password" name="password" required></li>
+              <li>Password&nbsp; <input type="password" name="password" id="password" required></li>
+              <li>Password Strength: <meter id="password-meter" min="0" max="4" low="1" high="3" optimum="4" value="0"></meter> </li>
+              <li>Already have an account? <a href="/login">Sign in here</a></li>
             </ul>
             <button class="btn" type="submit">Submit</button>
           </form>

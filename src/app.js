@@ -71,6 +71,19 @@ app.use((req, res, next) => {
   next();
 });
 
+function requireLoginForEverything(req, res, next) {
+  const publicRoutes = ['/login', '/register'];
+
+  if (!req.session.user && !publicRoutes.includes(req.path)) {
+    return res.redirect('/login');
+  }
+
+  next();
+}
+
+app.use(requireLoginForEverything);
+
+
 // Routes
 // Import and use your route files here
 // Example:
@@ -108,13 +121,6 @@ app.get('/gamescreen', csrfProtection, (req, res) => {
 app.get('/gameover', csrfProtection, (req, res) => {
   res.render('gameover', {
     title: 'Game Over',
-    csrfToken: req.csrfToken(),
-  });
-});
-
-app.get('/profile', csrfProtection, (req, res) => {
-  res.render('profile', {
-    title: 'Profile',
     csrfToken: req.csrfToken(),
   });
 });
