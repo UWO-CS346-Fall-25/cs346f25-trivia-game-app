@@ -17,12 +17,6 @@ const session = require('express-session');
 const csrf = require('csurf');
 const userRoutes = require('../src/routes/users');
 
-//Supabase instantiation 
-const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient(process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY);
-module.exports = supabase;
-
 // Initialize Express app
 const app = express();
 
@@ -65,7 +59,7 @@ app.use(
   })
 );
 
-app.use('/', userRoutes);
+//app.use('/', userRoutes);
 
 // CSRF protection
 // Note: Apply this after session middleware
@@ -76,6 +70,19 @@ app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   next();
 });
+
+function requireLoginForEverything(req, res, next) {
+  const publicRoutes = ['/login', '/register'];
+
+  if (!req.session.user && !publicRoutes.includes(req.path)) {
+    return res.redirect('/login');
+  }
+
+  next();
+}
+
+app.use(requireLoginForEverything);
+
 
 // Routes
 // Import and use your route files here
@@ -88,14 +95,12 @@ const gameRouter = require('./routes/gamescreen');
 app.use('/gamescreen', csrfProtection, gameRouter);
 
 const userRouter = require('./routes/users');
-app.use('/profile', userRouter);
-app.use('/users/logout', userRouter);
+app.use('/', csrfProtection, userRouter);
 
 const createRouter = require('./routes/create');
 app.use('/create', createRouter);
 
 const homeRouter = require('./routes/index');
-const csurf = require('csurf');
 app.use('/', csrfProtection, homeRouter);
 
 // Placeholder home route
@@ -113,30 +118,9 @@ app.get('/gamescreen', csrfProtection, (req, res) => {
   });
 });
 
-app.get('/login', csrfProtection, (req, res) => {
-  res.render('login', {
-    title: 'Login',
-    csrfToken: req.csrfToken(),
-  });
-});
-
-app.get('/register', csrfProtection, (req, res) => {
-  res.render('register', {
-    title: 'Register',
-    csrfToken: req.csrfToken(),
-  });
-});
-
 app.get('/gameover', csrfProtection, (req, res) => {
   res.render('gameover', {
     title: 'Game Over',
-    csrfToken: req.csrfToken(),
-  });
-});
-
-app.get('/profile', csrfProtection, (req, res) => {
-  res.render('profile', {
-    title: 'Profile',
     csrfToken: req.csrfToken(),
   });
 });

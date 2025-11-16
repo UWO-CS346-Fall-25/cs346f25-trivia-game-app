@@ -10,16 +10,7 @@
   <header>
     <nav>
       <div class="container">
-        <a href="/" class="logo">Trivia</a>
-        <ul class="nav-links">
-          <li><a href="/">Home</a></li>
-          <% if (user) { %>
-            <li><a href="/profile">Profile</a></li>
-          <% } else { %>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-          <% } %>
-        </ul>
+        <a class="logo">Trivia</a>
       </div>
     </nav>
   </header>
@@ -31,12 +22,18 @@
         <div class="user-input">
           <h2>Login</h2>
           <form action="/login" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <ul>
               <li>Username <input type="text" name="username" required></li>
               <li>Password&nbsp; <input type="password" name="password" required></li>
+              <li>Create an account <a href="/register">here</a></li>
             </ul>
             <button class="btn" type="submit">Login</button>
           </form>
+
+          <% if (error) { %>
+            <h3 style="color: red;"><%= error %></h3>
+          <% } %>
         </div>
       </div>
     </section>
