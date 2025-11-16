@@ -77,6 +77,8 @@ Week 9 -> Added working login and register forms that save user data as session 
 
 ![alt text](image-1.png)
 
+Week 11 -> Updated app to direct a user to the login page when not logged in. Implemented login and registration using a databse and password encryption for security with basic password and email checks, as well as adding a password strength meter. Express session persistence and logout features are unchanged from previous versions.
+
 ### Available Scripts
 
 - `npm start`: Start the production server
