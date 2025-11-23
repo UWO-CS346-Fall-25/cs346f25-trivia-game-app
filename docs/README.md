@@ -79,7 +79,11 @@ Week 9 -> Added working login and register forms that save user data as session 
 
 Week 11 -> Updated app to direct a user to the login page when not logged in. Implemented login and registration using a databse and password encryption for security with basic password and email checks, as well as adding a password strength meter. Express session persistence and logout features are unchanged from previous versions.
 
-Week 12 -> If, no questions are currently stored in the database, the app uses an API to auto-populate 8 games with 6 questions each into the database. These questions are all of random difficulty and category. No API/.env setup is required other than what is needed to connect to the Supabase DB. The leaderboard on the homepage is now functional because of the new user scores table. Note, the code to make the new table is found in the schema.sql file. Previously existing users are out of date, and new ones will be needed to use this new version of the app. The profile page now includes links to the top 3 games that a user has played, and lists what they're most played game is, among other stats. This also requires a new table, and the code for that is also available in the schema.sql file.
+Week 12 -> If no questions are currently stored in the database, the app uses an API to auto-populate 8 games with 6 questions each into the database. These questions are all of random difficulty and category. No API/.env setup is required other than what is needed to connect to the Supabase DB. The leaderboard on the homepage is now functional because of the new user scores table. Note, the code to make the new table is found in the schema.sql file. Previously existing users are out of date, and new ones will be needed to use this new version of the app. The profile page now includes links to the top 3 games that a user has played, and lists what they're most played game is, among other stats. This also requires a new table, and the code for that is also available in the schema.sql file.
+
+The games created by the API are stored as default games due to the random nature of the questions, as seen in the screenshot below.
+
+![alt text](image-2.png)
 
 ### Available Scripts
 
