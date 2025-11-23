@@ -24,3 +24,11 @@ CREATE TABLE users (
   password_hash TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
+
+CREATE TABLE user_scores (
+    user_id        INTEGER PRIMARY KEY REFERENCES users(id),
+    games_played   INTEGER NOT NULL DEFAULT 0,
+    num_correct    INTEGER NOT NULL DEFAULT 0,
+    num_incorrect  INTEGER NOT NULL DEFAULT 0,
+    num_answered   INTEGER NOT NULL DEFAULT 0
+);

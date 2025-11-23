@@ -46,7 +46,7 @@ exports.postRegister = async (req, res, next) => {
     }
 
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!validEmail.test(email)) {
+    if (!validEmail.test(email)) {
       return res.render('register', {
         title: 'Register',
         error: 'Enter a valid email',
@@ -57,16 +57,17 @@ exports.postRegister = async (req, res, next) => {
 
     //If it's valid, hash password and store data
     let hashedPassword = await bcrypt.hash(password, 10);
-    const { data, error: insertionError } = await supabase
+    const { data: user_data, error: insertionError } = await supabase
       .from('users')
       .insert([
-              { username: username, email: email, password_hash: hashedPassword },
-          ])
+        { username: username, email: email, password_hash: hashedPassword },
+      ])
       .select();
 
     req.session.user = {
       username,
-      creation: Date.now(),
+      id: user_data[0].id,
+      creation: user_data[0].created_at,
     };
 
     if (insertionError) {
@@ -77,6 +78,16 @@ exports.postRegister = async (req, res, next) => {
         csrfToken: req.csrfToken()
       });
     }
+
+    const { data: score, error: score_error } = await supabase
+      .from('user_scores')
+      .insert({
+        user_id: user_data[0].id,
+        games_played: 0,
+        num_correct: 0,
+        num_incorrect: 0,
+        num_answered: 0
+      })
 
     return res.redirect('/');
   } catch (error) {
@@ -105,7 +116,7 @@ exports.postLogin = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     let loginError = null;
-
+    let user_data;
     //Redirects to home after logging in, sets account variables
     if (username && password) {
       const { data: profile, error: queryError } = await supabase
@@ -113,12 +124,13 @@ exports.postLogin = async (req, res, next) => {
         .select('id, password_hash')
         .eq('username', username)
         .single();
-      
-      if(profile) {
+
+      if (profile) {
         let equalPW = await bcrypt.compare(password, profile.password_hash);
-        if(!equalPW) {
+        if (!equalPW) {
           loginError = "Incorrect Password";
         }
+        user_data = profile;
       }
       else {
         loginError = "Username not Found";
@@ -129,23 +141,24 @@ exports.postLogin = async (req, res, next) => {
     }
 
     // Some error occured when logging in, resend the page with an error message
-    if(loginError) {
+    if (loginError) {
       res.render('login', {
         user: null,
         title: 'Login',
         csrfToken: req.csrfToken(),
         error: loginError
       });
-    } 
+    }
     else {
-      req.session.user = { username };
-      req.session.user.creation = Date.now();
-      req.session.user.gamesPlayed = 0;
-      req.session.user.right = 0;
-      req.session.user.wrong = 0;
+      req.session.user = {
+        username,
+        id: user_data.id,
+        creation: user_data.created_at,
+      };
+
       return res.redirect('/');
     }
-    
+
   } catch (error) {
     next(error);
   }
@@ -164,19 +177,24 @@ exports.postLogout = (req, res) => {
   });
 };
 
-exports.getProfile = (req, res) => {
+exports.getProfile = async (req, res) => {
   const user = req.session.user;
 
-  const creationDate = new Date(req.session.user.creation).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const { data: scoreRow, error: scoreFetchError } = await supabase
+    .from("user_scores")
+    .select("games_played, num_correct, num_incorrect, num_answered")
+    .eq("user_id", user.id)
+    .single();
+
+  if (scoreFetchError) {
+    console.error(scoreFetchError);
+    return;
+  }
 
   let ratio = 0;
 
-  if (req.session.user.wrong > 0) {
-    ratio = ((req.session.user.right / (req.session.user.wrong + req.session.user.right)) * 100);
+  if (scoreRow.num_incorrect > 0) {
+    ratio = ((scoreRow.num_correct / (scoreRow.num_answered)) * 100);
     ratio = ratio.toFixed(2);
   }
 
@@ -184,11 +202,11 @@ exports.getProfile = (req, res) => {
   res.render('profile', {
     title: 'Profile',
     user: user.username,
-    date: creationDate,
+    date: user.creation,
     csrfToken: req.csrfToken(),
-    total: req.session.user.gamesPlayed,
-    right: req.session.user.right,
-    wrong: req.session.user.wrong,
+    total: scoreRow.games_played,
+    right: scoreRow.num_correct,
+    wrong: scoreRow.num_incorrect,
     ratio: ratio || 0
   });
 };

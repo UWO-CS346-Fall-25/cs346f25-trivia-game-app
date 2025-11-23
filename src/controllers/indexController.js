@@ -55,11 +55,13 @@ exports.getHome = async (req, res, next) => {
 
         for (let j = 0; j < 6; j++) {
           const currQuestion = questions.shift();
+
+
           let answers = currQuestion.incorrect_answers.concat(currQuestion.correct_answer);
           shuffle(answers);
 
-          for (let i = 0; i < answers.length; i++) {
-            answers[i] = decodeHtml(answers[i]);
+          for (let k = 0; k < answers.length; k++) {
+            answers[k] = decodeHtml(answers[k]);
           }
 
           //Decode/format the provided answers/question
@@ -96,9 +98,20 @@ exports.getHome = async (req, res, next) => {
       console.error('Error fetching games:', error);
     }
 
+    const { data: leaders, error: leaderError } = await supabase
+      .from("user_scores")
+      .select("user_id, num_correct, users (username)")
+      .order("num_correct", { ascending: false })
+      .limit(5);
+
+    if (leaderError) {
+      console.error('Error fetching leaders:', error);
+    }
+
     res.render('index', {
       title: 'Trivia Home',
       data,
+      leaders,
       user: req.session.user || null,
       csrfToken: req.csrfToken()
     });
@@ -122,11 +135,13 @@ function shuffle(array) {
 function decodeHtml(str) {
   return str
     .replaceAll('&quot;', '"')
+    .replaceAll('&eacute;', 'é')
     .replaceAll('&#039;', "'")
     .replaceAll('&amp;', '&')
     .replaceAll('&lt;', '<')
     .replaceAll('&gt;', '>');
 }
+
 
 
 /**

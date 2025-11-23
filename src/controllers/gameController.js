@@ -31,7 +31,9 @@ exports.loadGame = async (req, res) => {
   if (!req.session.gameData) {
     req.session.gameData = {
       currIndex: 0,
-      correct: 0
+      correct: 0,
+      answered: 0,
+      incorrect: 0
     }
   }
 
@@ -89,11 +91,12 @@ exports.checkAnswer = async (req, res) => {
   // Check if the selected answer matches the correct one
   const isCorrect = selectedAnswer === questionData.answer;
 
+  req.session.gameData.answered++;
+
   if (isCorrect) {
     req.session.gameData.correct++;
-    if (req.session.user) req.session.user.right++;
   } else {
-    if (req.session.user) req.session.user.wrong++;
+    req.session.gameData.incorrect++;
   }
 
   // Load all questions for this game to move to the next one
@@ -112,10 +115,35 @@ exports.checkAnswer = async (req, res) => {
 
   // If no more questions are left, end the game
   if (req.session.gameData.currIndex >= questions.length) {
+
+    const { data: scoreRow, error: scoreFetchError } = await supabase
+      .from("user_scores")
+      .select("games_played, num_correct, num_incorrect, num_answered")
+      .eq("user_id", req.session.user.id)
+      .single();
+
+    if (scoreFetchError) {
+      console.error(scoreFetchError);
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("user_scores")
+      .update({
+        games_played: scoreRow.games_played + 1,
+        num_correct: scoreRow.num_correct + req.session.gameData.correct,
+        num_incorrect: scoreRow.num_incorrect + req.session.gameData.incorrect,
+        num_answered: scoreRow.num_answered + req.session.gameData.answered
+      })
+      .eq("user_id", req.session.user.id)
+
+    if (error) {
+      console.log(error);
+    }
+
     const score = req.session.gameData.correct;
     const total = questions.length;
     delete req.session.gameData;
-    if (req.session.user) req.session.user.gamesPlayed++;
     return res.render('gameover', { title: "Game Over", score, total });
   }
 

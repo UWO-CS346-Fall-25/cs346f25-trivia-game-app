@@ -68,13 +68,15 @@
 
     <section class="leaderboard">
       <h2>Leaderboard</h2>
-      <h3>Top 5 players with the highest all-time scores</h3>
       <ol>
-        <li>Player 1</li>
-        <li>Player 2</li>
-        <li>Player 3</li>
-        <li>Player 4</li>
-        <li>Player 5</li>
+        <% leaders.forEach(leader=> { %>
+          <li>
+            <strong>
+              <%= leader.users.username %>
+            </strong> -
+            <%= leader.num_correct %>
+          </li>
+          <% }) %>
       </ol>
     </section>
   </main>
