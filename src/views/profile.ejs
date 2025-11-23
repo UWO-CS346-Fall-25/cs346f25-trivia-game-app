@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Trivia</title>
+  <title>
+    <%= title %> | Trivia
+  </title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
   <header>
     <nav>
@@ -21,10 +25,10 @@
                 <button type="submit" class="btn-link">Logout</button>
               </form>
             </li>
-          <% } else { %>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-          <% } %>
+            <% } else { %>
+              <li><a href="/login">Login</a></li>
+              <li><a href="/register">Register</a></li>
+              <% } %>
         </ul>
       </div>
     </nav>
@@ -32,41 +36,47 @@
 
   <main class="container">
     <section class="profile-hero">
-      <h1><%= user %></h1>
-      <p>Date Created: <%= date %></p>
+      <h1>
+        <%= user %>
+      </h1>
+      <p>Date Created: <%= date %>
+      </p>
     </section>
 
     <h2 id="account-h2">Account</h2>
     <section class="account">
       <div class="recomended-games">
-        <h3>Recomended Games</h3>
+        <h3>Top Games Played</h3>
         <div class="trivia-games-grid">
-          <div class="trivia-game">
-            <h3>Game 1</h3>
-            <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
-          </div>
-          <div class="trivia-game">
-            <h3>Game 2</h3>
-            <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
-          </div>
-          <div class="trivia-game">
-            <h3>Game 3</h3>
-            <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
-          </div>
-          <div class="trivia-game">
-            <h3>Game 4</h3>
-            <p><a href="/gamescreen"><button class="btn">Play</button></a></p>
-          </div>
+          <% topGames.forEach(g=> {
+            const game = g.games;
+            %>
+            <div class="trivia-game">
+              <h3>
+                <%= game.title %>
+              </h3>
+
+              <p>
+                <a href="/gamescreen/<%= game.slug %>">
+                  <button class="btn">Play</button>
+                </a>
+              </p>
+            </div>
+            <% }) %>
         </div>
       </div>
       <div class="account-information">
         <div class="Stats">
           <h3>Stats</h3>
           <ul>
-            <li>Games played: <%= total %></li>
-            <li>Favorite trivia</li>
-            <li>Questions answered right: <%= right %></li>
-            <li>Questions answered wrong: <%= wrong %></li>
+            <li>Games played: <%= total %>
+            </li>
+            <li>Favorite trivia: <%= favoriteGame %>
+            </li>
+            <li>Questions answered right: <%= right %>
+            </li>
+            <li>Questions answered wrong: <%= wrong %>
+            </li>
             <li>Right to wrong ratio: <%= ratio %>%</li>
           </ul>
         </div>
@@ -79,12 +89,13 @@
       </div>
     </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 CS346 Trivia Project. All rights reserved.</p>
-    </div>
-  </footer>
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 CS346 Trivia Project. All rights reserved.</p>
+      </div>
+    </footer>
 
-  <script src="/js/main.js"></script>
+    <script src="/js/main.js"></script>
 </body>
+
 </html>
