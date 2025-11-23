@@ -116,6 +116,7 @@ exports.checkAnswer = async (req, res) => {
   // If no more questions are left, end the game
   if (req.session.gameData.currIndex >= questions.length) {
 
+    // Get current stats for the user
     const { data: scoreRow, error: scoreFetchError } = await supabase
       .from("user_scores")
       .select("games_played, num_correct, num_incorrect, num_answered")
@@ -127,7 +128,8 @@ exports.checkAnswer = async (req, res) => {
       return;
     }
 
-    const { data, error } = await supabase
+    // Update stats for the user using the old stats and new stats
+    const { data: newStats, error } = await supabase
       .from("user_scores")
       .update({
         games_played: scoreRow.games_played + 1,
@@ -136,16 +138,40 @@ exports.checkAnswer = async (req, res) => {
         num_answered: scoreRow.num_answered + req.session.gameData.answered
       })
       .eq("user_id", req.session.user.id)
+      .select()
+      .single();
 
     if (error) {
       console.log(error);
     }
 
+    //Store game data to keep track of how many times a user has played it
+    // Upsert -> Update if it exists, Insert if it doesn't
+    const { data: stats } = await supabase
+      .from("user_game_stats")
+      .select("plays, correct, incorrect, answered")
+      .eq("user_id", req.session.user.id)
+      .eq("game_id", questionData.game_id)
+      .maybeSingle();
+
+    await supabase
+      .from("user_game_stats")
+      .upsert({
+        user_id: req.session.user.id,
+        game_id: questionData.game_id,
+        plays: (stats ? stats.plays : 0) + 1,
+        correct: (stats ? stats.correct : 0) + req.session.gameData.correct,
+        incorrect: (stats ? stats.incorrect : 0) + req.session.gameData.incorrect,
+        answered: (stats ? stats.answered : 0) + req.session.gameData.answered,
+      });
+
+    // Store important info, clear the game data
     const score = req.session.gameData.correct;
     const total = questions.length;
     delete req.session.gameData;
     return res.render('gameover', { title: "Game Over", score, total });
   }
+
 
   // Otherwise, show the next question
   const nextQuestion = questions[req.session.gameData.currIndex];

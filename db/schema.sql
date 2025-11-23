@@ -32,3 +32,13 @@ CREATE TABLE user_scores (
     num_incorrect  INTEGER NOT NULL DEFAULT 0,
     num_answered   INTEGER NOT NULL DEFAULT 0
 );
+
+CREATE TABLE user_game_stats (
+    user_id    INTEGER NOT NULL REFERENCES users(id),
+    game_id    INTEGER NOT NULL REFERENCES games(id),
+    plays      INTEGER NOT NULL DEFAULT 0,
+    correct    INTEGER NOT NULL DEFAULT 0,
+    incorrect  INTEGER NOT NULL DEFAULT 0,
+    answered   INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (user_id, game_id)
+);

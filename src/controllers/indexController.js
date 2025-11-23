@@ -36,9 +36,7 @@ exports.getHome = async (req, res, next) => {
       const data = await response.json();
       const questions = data.results;
 
-      console.log("Is array:", Array.isArray(questions));
-      console.log("Length:", questions.length);
-
+      // Create generic games from the API data
       for (let i = 0; i < 8; i++) {
         const title = "Game " + (i + 1);
         const slug = "game-" + (i + 1);
@@ -56,10 +54,11 @@ exports.getHome = async (req, res, next) => {
         for (let j = 0; j < 6; j++) {
           const currQuestion = questions.shift();
 
-
+          //Shuffle the answers so that the the right one isn't always the last one
           let answers = currQuestion.incorrect_answers.concat(currQuestion.correct_answer);
           shuffle(answers);
 
+          //Decode the question text to format it correctly
           for (let k = 0; k < answers.length; k++) {
             answers[k] = decodeHtml(answers[k]);
           }
@@ -89,7 +88,7 @@ exports.getHome = async (req, res, next) => {
       }
     }
 
-
+    //Get all the games in the database
     const { data, error } = await supabase
       .from('games')
       .select('id, title, description, slug')
@@ -98,6 +97,7 @@ exports.getHome = async (req, res, next) => {
       console.error('Error fetching games:', error);
     }
 
+    // Get leaderboard data
     const { data: leaders, error: leaderError } = await supabase
       .from("user_scores")
       .select("user_id, num_correct, users (username)")
@@ -132,6 +132,7 @@ function shuffle(array) {
 }
 
 //Helper to fix the returned JSON strings
+//Added some of the codes that appeared in strings
 function decodeHtml(str) {
   return str
     .replaceAll('&quot;', '"')

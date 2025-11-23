@@ -191,6 +191,7 @@ exports.getProfile = async (req, res) => {
     return;
   }
 
+  // Calculate and display game stats
   let ratio = 0;
 
   if (scoreRow.num_incorrect > 0) {
@@ -204,11 +205,29 @@ exports.getProfile = async (req, res) => {
     year: "numeric"
   });
 
+  //Get the top 3 most played games
+  const { data: topGames } = await supabase
+    .from("user_game_stats")
+    .select("plays, game_id, games (title, slug)")
+    .eq("user_id", user.id)
+    .order("plays", { ascending: false })
+    .limit(3);
+
+
+  //Get the title of the most played game
+  let favoriteGame = "None";
+
+  if (topGames && topGames.length > 0) {
+    favoriteGame = topGames[0].games.title;
+  }
+
 
   res.render('profile', {
     title: 'Profile',
     user: user.username,
     date,
+    favoriteGame,
+    topGames,
     csrfToken: req.csrfToken(),
     total: scoreRow.games_played,
     right: scoreRow.num_correct,
