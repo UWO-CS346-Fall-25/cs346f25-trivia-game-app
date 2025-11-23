@@ -13,14 +13,14 @@
 
 /* CSS Variables */
 :root {
-  --primary-color: #007bff;
-  --secondary-color: #6c757d;
+  --primary-color: #3adadd;
+  --secondary-color: #d7269c;
   --success-color: #28a745;
   --danger-color: #dc3545;
   --warning-color: #ffc107;
-  --info-color: #17a2b8;
-  --light-color: #f8f9fa;
-  --dark-color: #343a40;
+  --info-color: #8d17b8;
+  --light-color: #e883e4;
+  --dark-color: #430d4b;
   --font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, sans-serif;
@@ -39,7 +39,7 @@ body {
   font-family: var(--font-family);
   line-height: 1.6;
   color: var(--dark-color);
-  background-color: #fff;
+  background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
 }
 
 a {
@@ -62,7 +62,7 @@ a:hover {
 header {
   position: sticky;
   top: 0;
-  background-color: var(--dark-color);
+  background-color: var(--light-color);
   color: white;
   padding: 1rem 0;
   box-shadow: var(--box-shadow);
@@ -123,7 +123,7 @@ main {
   text-align: center;
   padding: 3rem 0;
   background: linear-gradient(135deg, var(--secondary-color), var(--dark-color));
-  color: white;
+  color: rgb(255, 255, 255);
   border-radius: var(--border-radius);
   margin-bottom: 2rem;
 }
@@ -140,7 +140,7 @@ main {
 .profile-hero {
   text-align: center;
   padding: 3rem 0;
-  background: rgb(82, 149, 255);
+  background: rgb(94, 23, 127);
   color: white;
   border-radius: var(--border-radius);
   margin-bottom: 2rem;
