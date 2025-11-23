@@ -62,7 +62,7 @@ exports.postRegister = async (req, res, next) => {
       .insert([
         { username: username, email: email, password_hash: hashedPassword },
       ])
-      .select();
+      .select("id, username, created_at");
 
     req.session.user = {
       username,
@@ -121,7 +121,7 @@ exports.postLogin = async (req, res, next) => {
     if (username && password) {
       const { data: profile, error: queryError } = await supabase
         .from('users')
-        .select('id, password_hash')
+        .select('id, username, password_hash, created_at')
         .eq('username', username)
         .single();
 
@@ -142,7 +142,7 @@ exports.postLogin = async (req, res, next) => {
 
     // Some error occured when logging in, resend the page with an error message
     if (loginError) {
-      res.render('login', {
+      return res.render('login', {
         user: null,
         title: 'Login',
         csrfToken: req.csrfToken(),
@@ -198,11 +198,17 @@ exports.getProfile = async (req, res) => {
     ratio = ratio.toFixed(2);
   }
 
+  const date = new Date(user.creation).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
 
   res.render('profile', {
     title: 'Profile',
     user: user.username,
-    date: user.creation,
+    date,
     csrfToken: req.csrfToken(),
     total: scoreRow.games_played,
     right: scoreRow.num_correct,
