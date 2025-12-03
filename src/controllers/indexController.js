@@ -45,7 +45,7 @@ exports.getHome = async (req, res, next) => {
         const { data, error: sqlError } = await supabase
           .from("games")
           .insert([
-            { title: title, description: description, slug: slug },
+            { title: title, description: description, slug: slug, user_id: null },
           ])
           .select();
 
@@ -91,7 +91,7 @@ exports.getHome = async (req, res, next) => {
     //Get all the games in the database
     const { data, error } = await supabase
       .from('games')
-      .select('id, title, description, slug')
+      .select('id, title, description, slug, user_id')
 
     if (error) {
       console.error('Error fetching games:', error);
@@ -143,6 +143,27 @@ function decodeHtml(str) {
     .replaceAll('&gt;', '>');
 }
 
+
+/**
+ * POST /
+ * Delete a game
+ */
+exports.deleteGame = async (req, res, next) => {
+
+  try {
+    const gameId = req.params.id;
+    await supabase
+      .from("games")
+      .delete()
+      .eq("id", gameId);
+
+    //Get home
+    return res.redirect("/");
+  }
+  catch (error) {
+    next(error);
+  }
+};
 
 
 /**

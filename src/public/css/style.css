@@ -164,6 +164,14 @@ main {
   margin-bottom: 2rem;
 }
 
+.game-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;            
+  margin-top: 10px;
+}
+
+
 /*trivia game */
 .trivia-game {
   padding: 2rem;
