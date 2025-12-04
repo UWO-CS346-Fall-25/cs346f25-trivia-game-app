@@ -57,12 +57,23 @@ exports.postRegister = async (req, res, next) => {
 
     //If it's valid, hash password and store data
     let hashedPassword = await bcrypt.hash(password, 10);
+
     const { data: user_data, error: insertionError } = await supabase
-      .from('users')
+      .from("users")
       .insert([
         { username: username, email: email, password_hash: hashedPassword },
       ])
       .select("id, username, created_at");
+
+    if (insertionError || !user_data || user_data.length === 0) {
+      console.error("Insert error:", insertionError);
+
+      return res.render("register", {
+        title: "Register",
+        csrfToken: req.csrfToken(),
+        error: "Registration failed",
+      });
+    }
 
     req.session.user = {
       username,

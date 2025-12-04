@@ -14,6 +14,7 @@
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
 const supabase = require('../supabase');
+const userController = require("./userController");
 
 
 
@@ -142,6 +143,41 @@ function decodeHtml(str) {
     .replaceAll('&lt;', '<')
     .replaceAll('&gt;', '>');
 }
+
+
+/**
+ * POST /
+ * Delete current account
+ */
+exports.deleteAccount = async (req, res, next) => {
+
+  try {
+    const userId = req.session.user.id;
+
+    //Delete games made by the user
+    await supabase
+      .from("games")
+      .delete()
+      .eq("user_id", userId);
+
+    //Delete scores for the user
+    await supabase
+      .from("user_scores")
+      .delete()
+      .eq("user_id", userId);
+
+    //Delete the user from the table
+    await supabase
+      .from("users")
+      .delete()
+      .eq("id", userId);
+
+    return userController.postLogout(req, res);
+  }
+  catch (error) {
+    next(error);
+  }
+};
 
 
 /**

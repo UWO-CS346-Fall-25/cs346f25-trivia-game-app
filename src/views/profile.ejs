@@ -84,7 +84,10 @@
       <div class="account-settings">
         <h3>Settings</h3>
         <ul>
-          <li>Something</li>
+          <form action="/delete" method="POST" style="margin: 0;">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <li><button class="btn">Delete Account</button></li>
+          </form>
         </ul>
       </div>
     </section>
