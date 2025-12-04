@@ -13,12 +13,7 @@ A teaching template for building secure web applications with Node.js, Express, 
 
 ##  Current Summary of the project
 
-We have implemented a mild amount of interactability with the buttons and trivia questions.  You
-can go into a trivia and after 5 questions, it will tell you how many you got right.  We have also
-have a s profile, register, and locgin page that don't do much right now.  In the login page, the
-button can be used but doesn't work exactly as intended right now.  The likely next addition we'll 
-add is a way to store information neccesary for logged in users as well as changing up the site 
-based on if the user in logged in.
+The app currently fully functional. A user can will be prompted to either login or register for a new account. Once signed in, they will be directed to the homepage. If no games are currently in the database, eight games will be created by default using random questions provided by calling a trivia games API. Users can play these games or create their own games. Games can be deleted by the user that created them; default games can't be deleted by users. The leaderboard at the bottom of the homepage displays the top 5 users who have gotten the most questions correct. The profile page shows more detailed game stats, shows the top 3 most played games, and allows a user to delete their account. There is no safeguard there, may be worth adding. When a user logs out, their session is cleared and they return to the login/register phase.
 
 ## Quick Start
 
