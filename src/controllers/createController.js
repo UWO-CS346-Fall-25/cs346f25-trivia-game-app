@@ -25,6 +25,7 @@ exports.loadCreate = (req, res) => {
     if (req.session.user) {
         res.render('Create', {
             title: 'Create New Game',
+            csrfToken: req.csrfToken()
         });
     }
     else {
@@ -33,35 +34,52 @@ exports.loadCreate = (req, res) => {
 };
 
 exports.addGame = async (req, res) => {
-    const { title, description, questions } = req.body;
-    const slug = title.replaceAll(' ', '-').toLowerCase();
+    let { title, description, questions } = req.body;
 
+    if (!questions) {
+        questions = [];
+    } else if (!Array.isArray(questions)) {
+        questions = Object.values(questions);
+    }
+
+    const slug = title.replaceAll(' ', '-').toLowerCase();
 
     const { data, error } = await supabase
         .from("games")
         .insert([
-            { title: title, description: description, slug: slug },
+            { 
+                title: title, 
+                description: description, 
+                slug: slug, 
+                user_id: req.session.user.id 
+            },
         ])
         .select();
+
     if (error) {
-        console.log("database error");
+        console.log("database error", error);
+        return res.redirect("/create");
     }
 
     const id = data[0].id;
 
     for (const curr of questions) {
-        const { data, error } = await supabase
+        const { error: qError } = await supabase
             .from("questions")
             .insert([{
-                game_id: id, question: curr.question,
-                option_a: curr.option_a, option_b: curr.option_b,
-                option_c: curr.option_c, option_d: curr.option_d, answer: curr.correct_answer
-            },])
-            .select();
+                game_id: id,
+                question: curr.question,
+                option_a: curr.option_a,
+                option_b: curr.option_b,
+                option_c: curr.option_c,
+                option_d: curr.option_d,
+                answer: curr.correct_answer
+            }]);
 
-        if (error) {
-            console.log(error);
+        if (qError) {
+            console.log("Question insert error:", qError);
         }
     }
+
     return res.redirect("/");
 };

@@ -3,7 +3,8 @@ CREATE TABLE games (
   title text NOT NULL,
   slug text NOT NULL,
   description text,
-  created timestamptz NOT NULL DEFAULT now()
+  created timestamptz NOT NULL DEFAULT now(),
+  user_id INT REFERENCES users(id)
 );
 
 CREATE TABLE questions (
@@ -35,7 +36,7 @@ CREATE TABLE user_scores (
 
 CREATE TABLE user_game_stats (
     user_id    INTEGER NOT NULL REFERENCES users(id),
-    game_id    INTEGER NOT NULL REFERENCES games(id),
+    game_id    INTEGER REFERENCES games(id) ON DELETE CASCADE NOT NULL,
     plays      INTEGER NOT NULL DEFAULT 0,
     correct    INTEGER NOT NULL DEFAULT 0,
     incorrect  INTEGER NOT NULL DEFAULT 0,

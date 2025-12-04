@@ -13,14 +13,14 @@
 
 /* CSS Variables */
 :root {
-  --primary-color: #3adadd;
-  --secondary-color: #d7269c;
+  --primary-color: #6D8593;
+  --secondary-color: #3B5C6E; 
   --success-color: #28a745;
   --danger-color: #dc3545;
   --warning-color: #ffc107;
-  --info-color: #8d17b8;
-  --light-color: #e883e4;
-  --dark-color: #430d4b;
+  --info-color: #6D8593;
+  --light-color: #E8DCC2;
+  --dark-color: #3A2F24;
   --font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, sans-serif;
@@ -39,7 +39,7 @@ body {
   font-family: var(--font-family);
   line-height: 1.6;
   color: var(--dark-color);
-  background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+  background: #F7F5EF;
 }
 
 a {
@@ -62,7 +62,7 @@ a:hover {
 header {
   position: sticky;
   top: 0;
-  background-color: var(--light-color);
+  background-color: var(--secondary-color);
   color: white;
   padding: 1rem 0;
   box-shadow: var(--box-shadow);
@@ -122,8 +122,8 @@ main {
 .hero {
   text-align: center;
   padding: 3rem 0;
-  background: linear-gradient(135deg, var(--secondary-color), var(--dark-color));
-  color: rgb(255, 255, 255);
+  background: linear-gradient(135deg, #4F84C4, #2A4F8E);
+  color: white;
   border-radius: var(--border-radius);
   margin-bottom: 2rem;
 }
@@ -140,7 +140,7 @@ main {
 .profile-hero {
   text-align: center;
   padding: 3rem 0;
-  background: rgb(94, 23, 127);
+  background: #2A4F8E;
   color: white;
   border-radius: var(--border-radius);
   margin-bottom: 2rem;
@@ -164,10 +164,17 @@ main {
   margin-bottom: 2rem;
 }
 
+.game-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
 /*trivia game */
 .trivia-game {
   padding: 2rem;
-  background-color: var(--light-color);
+  background-color: #FFFFFF;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
@@ -183,49 +190,17 @@ main {
   margin-right: 0;
 }
 
-#movie-trivia {
-  background-color: #ff8793;
-}
-
-#history-trivia {
-  background-color: rgb(255, 255, 172);
-}
-
-#politic-trivia {
-  background-color: rgb(255, 235, 106);
-}
-
-#art-trivia {
-  background-color: rgb(255, 160, 223);
-}
-
-#mythology-trivia {
-  background-color: #b6f5ff;
-}
-
-#animal-trivia {
-  background-color: rgb(253, 194, 86);
-}
-
-#sports-trivia {
-  background-color: #bbb5ff;
-}
-
-#geography-trivia {
-  background-color: #b3ffc5;
-}
-
 /* Playing Game Section */
 .answers {
   padding: 2rem;
-  background-color: var(--light-color);
+  background-color: #FFFFFF;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
 
 .answers-correct {
   padding: 2rem;
-  background-color: var(--light-color);
+  background-color: #FFFFFF;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   text-align: center;
@@ -247,7 +222,6 @@ main {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
-
 
 /* Login and Register pages */
 .user-input input {
@@ -271,7 +245,7 @@ main {
 
 /* Account Section*/
 .account {
-  background-color: lightgray;
+  background-color: #FFFFFF;
   border-radius: 15px;
   display: flex;
   flex-direction: row;
@@ -299,7 +273,7 @@ main {
 
 /* Leaderboard Section */
 .leaderboard {
-  background-color: var(--light-color);
+  background-color: #FFFFFF;
   padding: 2rem;
   border-radius: var(--border-radius);
   margin: 2rem 0;
@@ -336,7 +310,7 @@ main {
 
 .error-details {
   text-align: left;
-  background-color: var(--light-color);
+  background-color: #FFFFFF;
   padding: 1rem;
   border-radius: var(--border-radius);
   margin: 2rem 0;
@@ -352,7 +326,7 @@ main {
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background-color: var(--dark-color);
+  background-color: var(--secondary-color);
   color: white;
   border: none;
   border-radius: var(--border-radius);
@@ -362,9 +336,8 @@ main {
 }
 
 .btn:hover {
-  background-color: #ccc7be;
-  text-decoration: none;
-  color: darkslategray;
+  background-color: #4F84C4;
+  color: white;
 }
 
 /* Forms */
@@ -390,14 +363,13 @@ main {
 
 /* Footer */
 footer {
-  background-color: var(--dark-color);
+  background-color: var(--secondary-color);
   color: white;
   text-align: center;
   padding: 2rem 0;
   margin-top: 3rem;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .nav-links {
     flex-direction: column;
@@ -411,4 +383,135 @@ footer {
   .feature-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Create game form */
+form#create-game-form,
+main .create-game-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 3rem;
+}
+
+form label {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: var(--dark-color);
+}
+
+form input[type="text"] {
+  width: 100%;
+  max-width: 700px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  border: 2px solid var(--secondary-color);
+  border-radius: 8px;
+  background: white;
+  color: var(--dark-color);
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+form input[type="text"]:focus {
+  border-color: var(--primary-color);
+  background: #f1f7ff;
+  outline: none;
+}
+
+.question-block {
+  background: #FFFFFF;
+  padding: 1.75rem 2rem;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  border-left: 6px solid var(--secondary-color);
+  margin-bottom: 2rem;
+}
+
+.question-block label {
+  color: var(--dark-color);
+}
+
+.question-block input[type="text"] {
+  background: #ffffff;
+}
+
+.question-block input[type="radio"] {
+  margin-left: 10px;
+  transform: scale(1.2);
+}
+
+.question-block hr {
+  border: none;
+  height: 1px;
+  background: #ddd;
+  margin: 1.5rem 0;
+}
+
+h2, h3 {
+  text-align: center;
+  color: var(--dark-color);
+  margin-bottom: 10px;
+}
+
+button.btn {
+  width: fit-content;
+  padding: 0.85rem 1.75rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button.btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+#add-question.btn {
+  background-color: var(--success-color);
+}
+
+#add-question.btn:hover {
+  background-color: #1f8f3a;
+  color: white;
+}
+
+/* Input formatting */
+form input[type="password"] {
+  width: 100%;
+  max-width: 700px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  border: 2px solid var(--secondary-color);
+  border-radius: 8px;
+  background: white;
+  color: var(--dark-color);
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+form input[type="password"]:focus {
+  border-color: var(--primary-color);
+  background: #f1f7ff;
+  outline: none;
+}
+
+/* Profile Page */
+
+.account-information ul {
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }

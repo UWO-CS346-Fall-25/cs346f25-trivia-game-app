@@ -57,12 +57,28 @@ exports.postRegister = async (req, res, next) => {
 
     //If it's valid, hash password and store data
     let hashedPassword = await bcrypt.hash(password, 10);
+
     const { data: user_data, error: insertionError } = await supabase
-      .from('users')
+      .from("users")
       .insert([
         { username: username, email: email, password_hash: hashedPassword },
       ])
       .select("id, username, created_at");
+
+    if (insertionError || !user_data || user_data.length === 0) {
+      console.error("Insert error:", insertionError);
+      let errorMsg = "Registration error";
+
+      if(insertionError) {
+        errorMsg = "Username Taken"
+      }
+
+      return res.render("register", {
+        title: "Register",
+        csrfToken: req.csrfToken(),
+        error: "Username Taken",
+      });
+    }
 
     req.session.user = {
       username,
@@ -70,14 +86,6 @@ exports.postRegister = async (req, res, next) => {
       creation: user_data[0].created_at,
     };
 
-    if (insertionError) {
-      return res.render('register', {
-        title: 'Register',
-        error: "Username is already taken",
-        user: req.session.user,
-        csrfToken: req.csrfToken()
-      });
-    }
 
     const { data: score, error: score_error } = await supabase
       .from('user_scores')

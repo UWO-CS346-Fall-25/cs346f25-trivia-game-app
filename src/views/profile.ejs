@@ -69,22 +69,26 @@
         <div class="Stats">
           <h3>Stats</h3>
           <ul>
-            <li>Games played: <%= total %>
-            </li>
-            <li>Favorite trivia: <%= favoriteGame %>
-            </li>
-            <li>Questions answered right: <%= right %>
-            </li>
-            <li>Questions answered wrong: <%= wrong %>
-            </li>
-            <li>Right to wrong ratio: <%= ratio %>%</li>
+            <li><h4>Games played:</h4> <%= total %>
+            </li> <br>
+            <li><h4>Favorite trivia:</h4> <%= favoriteGame %>
+            </li> <br>
+            <li><h4>Questions answered right:</h4> <%= right %>
+            </li> <br>
+            <li><h4>Questions answered wrong:</h4> <%= wrong %>
+            </li> <br>
+            <li><h4>Right to wrong ratio:</h4> <%= ratio %>%
+            </li> <br>
           </ul>
         </div>
       </div>
       <div class="account-settings">
         <h3>Settings</h3>
         <ul>
-          <li>Something</li>
+          <form action="/delete" method="POST" style="margin: 0;">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <li><button class="btn">Delete Account</button></li>
+          </form>
         </ul>
       </div>
     </section>

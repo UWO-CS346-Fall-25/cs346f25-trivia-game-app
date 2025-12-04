@@ -14,6 +14,7 @@
 // Import models if needed
 // const SomeModel = require('../models/SomeModel');
 const supabase = require('../supabase');
+const userController = require("./userController");
 
 
 
@@ -45,7 +46,7 @@ exports.getHome = async (req, res, next) => {
         const { data, error: sqlError } = await supabase
           .from("games")
           .insert([
-            { title: title, description: description, slug: slug },
+            { title: title, description: description, slug: slug, user_id: null },
           ])
           .select();
 
@@ -91,7 +92,7 @@ exports.getHome = async (req, res, next) => {
     //Get all the games in the database
     const { data, error } = await supabase
       .from('games')
-      .select('id, title, description, slug')
+      .select('id, title, description, slug, user_id')
 
     if (error) {
       console.error('Error fetching games:', error);
@@ -143,6 +144,62 @@ function decodeHtml(str) {
     .replaceAll('&gt;', '>');
 }
 
+
+/**
+ * POST /
+ * Delete current account
+ */
+exports.deleteAccount = async (req, res, next) => {
+
+  try {
+    const userId = req.session.user.id;
+
+    //Delete games made by the user
+    await supabase
+      .from("games")
+      .delete()
+      .eq("user_id", userId);
+
+    //Delete scores for the user
+    await supabase
+      .from("user_scores")
+      .delete()
+      .eq("user_id", userId);
+
+    //Delete the user from the table
+    await supabase
+      .from("users")
+      .delete()
+      .eq("id", userId);
+
+    return userController.postLogout(req, res);
+  }
+  catch (error) {
+    next(error);
+  }
+};
+
+
+/**
+ * POST /
+ * Delete a game
+ */
+exports.deleteGame = async (req, res, next) => {
+
+  try {
+    const gameId = req.params.id;
+    await supabase
+      .from("games")
+      .delete()
+      .eq("id", gameId);
+
+    //Get home
+    return res.redirect("/");
+  }
+  catch (error) {
+    next(error);
+  }
+};
 
 
 /**

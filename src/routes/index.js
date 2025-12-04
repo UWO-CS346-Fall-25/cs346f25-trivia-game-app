@@ -19,6 +19,8 @@ const express = require('express');
 const router = express.Router();
 const homeController = require('../controllers/indexController');
 router.get('/', homeController.getHome);
+router.post('/delete/:id', homeController.deleteGame);
+router.post('/delete', homeController.deleteAccount);
 
 
 // Import controllers

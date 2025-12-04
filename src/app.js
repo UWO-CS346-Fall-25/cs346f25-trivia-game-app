@@ -98,10 +98,11 @@ const userRouter = require('./routes/users');
 app.use('/', csrfProtection, userRouter);
 
 const createRouter = require('./routes/create');
-app.use('/create', createRouter);
+app.use('/create', csrfProtection, createRouter);
 
 const homeRouter = require('./routes/index');
 app.use('/', csrfProtection, homeRouter);
+app.use('/delete', csrfProtection, homeRouter)
 
 // Placeholder home route
 app.get('/', csrfProtection, (req, res) => {

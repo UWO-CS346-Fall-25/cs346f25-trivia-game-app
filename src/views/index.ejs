@@ -54,13 +54,21 @@
                 <p>
                   <%= game.description %>
                 </p>
-                <p>
-                  <a href="/gamescreen/<%= game.slug %>">
-                    <% if (user) { %>
-                      <button class="btn">Play</button>
-                      <% } %>
-                  </a>
-                </p>
+
+              <div class="game-actions">
+                <a href="/gamescreen/<%= game.slug %>">
+                  <button class="btn play-btn">Play</button>
+                </a>
+
+                <% if (game.user_id == user.id) { %>
+                  <form action="/delete/<%= game.id %>" method="POST" style="margin: 0;">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="btn">Delete</button>
+                  </form>
+                <% } %>
+              </div>
+
+
               </div>
               <% }) %>
           </div>
