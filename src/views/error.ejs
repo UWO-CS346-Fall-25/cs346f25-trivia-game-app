@@ -19,20 +19,13 @@
   </header>
 
   <main class="container">
-    <div class="error-page">
-      <h1><%= error.status || 500 %></h1>
-      <h2><%= message %></h2>
-      
-      <% if (error.stack) { %>
-        <div class="error-details">
-          <h3>Error Details (Development Only)</h3>
-          <pre><%= error.stack %></pre>
-        </div>
-      <% } %>
+  <div class="error-page">
+    <h1>Something Went Wrong</h1>
+    <h2>We couldn't complete your request, but everything is okay.</h2>
 
-      <a href="/" class="btn">Go Back Home</a>
-    </div>
-  </main>
+    <a href="/" class="btn">Go Back Home</a>
+  </div>
+</main>
 
   <footer>
     <div class="container">

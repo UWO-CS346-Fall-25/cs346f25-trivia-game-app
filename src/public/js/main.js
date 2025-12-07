@@ -185,6 +185,8 @@ function showNotification(message, type = 'info') {
   }, 3000);
 }
 
+
+// Listens the user to attempt to submit an answer
 document.addEventListener("click", async (event) => {
   if (event.target && event.target.id === "submitAnswer") {
     event.preventDefault();
@@ -196,6 +198,7 @@ async function submitGame() {
   const selected = document.querySelector('input[name="selectedAnswer"]:checked');
   const questionId = document.querySelector('input[name="question_id"]').value;
 
+  // Verifies that an answer is chosen
   if (!selected) {
     alert("Choose an answer!");
     return;
@@ -204,6 +207,7 @@ async function submitGame() {
   const choice = selected.value;
   const token = document.querySelector('input[name="_csrf"]').value;
 
+  //Check answer, go from there
   const response = await fetch("/gamescreen/check", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded", 'CSRF-Token': token },
@@ -217,8 +221,7 @@ async function submitGame() {
   document.body.innerHTML = html;
 }
 
-
-
+// Code that captures all the data entered for the current question and organizes it
 const addQuestionBtn = document.getElementById("add-question");
 if (addQuestionBtn) {
   addQuestionBtn.addEventListener("click", () => {
@@ -243,7 +246,7 @@ if (addQuestionBtn) {
   });
 }
 
-
+// Code that dynamically updates the meter that shows how strong the current password is
 document.addEventListener("DOMContentLoaded", () => { 
   const passwordInput = document.getElementById("password");
   const meter = document.getElementById("password-meter");
@@ -264,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+//Code to determine how strong a password is using a scoring system
 function findScore(pw) {
   let score = 0;
 

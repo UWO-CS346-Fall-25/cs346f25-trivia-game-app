@@ -13,14 +13,18 @@ A teaching template for building secure web applications with Node.js, Express, 
 
 ##  Current Summary of the project
 
-The app currently fully functional. A user can will be prompted to either login or register for a new account. Once signed in, they will be directed to the homepage. If no games are currently in the database, eight games will be created by default using random questions provided by calling a trivia games API. Users can play these games or create their own games. Games can be deleted by the user that created them; default games can't be deleted by users. The leaderboard at the bottom of the homepage displays the top 5 users who have gotten the most questions correct. The profile page shows more detailed game stats, shows the top 3 most played games, and allows a user to delete their account. There is no safeguard there, may be worth adding. When a user logs out, their session is cleared and they return to the login/register phase.
+The app is currently functional. A user will be prompted to either log in or register for a new account upon entering the site. Once signed in, they will be directed to the homepage. If no games are currently in the database, eight games will be created by default using random questions provided by calling a trivia games API. Users can play these games or create their own games. Games can be deleted by the user who created them; default games cannot be deleted by users. The leaderboard at the bottom of the homepage displays the top five users who have answered the most questions correctly. The profile page shows more detailed game stats, such as right-to-wrong answer ratio and the top three most played games, and allows a user to delete their account. When a user logs out, their session is cleared and they return to the login/register phase. Their accounts are saved so they can log back in later. When a user creates an account, it will inform them about the strength of their password, but there are no restrictions on what password they can set. Usernames and emails must be unique. Changes made by a user are visible across all users’ sites, such as newly created games and updates to the leaderboard.
+
+## Technical Architecture
+MVC is an architecture pattern that is broken into three parts: The model (the data and database layer), the view (what the user sees), and the controller (the logic that connects them). This project uses MVC by keeping all data operations inside Supabase queries (Model), placing all user-facing HTML inside EJS templates (View), and handling all application logic inside the Express controllers (Controller). Each request is routed to a controller, which interacts with the database, processes data, and then passes that data to an EJS file that renders the final page for the user.
+
 
 ## Quick Start
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repository-url>
-   cd cs346-semester-project-template
+   git clone https://github.com/UWO-CS346-Fall-25/cs346f25-trivia-game-app.git
+   cd cs346f25-trivia-game-app
    ```
 
 2. **Install dependencies**
@@ -28,38 +32,37 @@ The app currently fully functional. A user can will be prompted to either login 
    npm install
    ```
 
-3. **Set up environment variables**
+3. **Create & Set up PostgreSQL database**
    ```bash
-   cp .env.example .env
-   # Edit .env with your database credentials
+   Create database 
+   Run the code found in /db/schema.sql in Supabase to create the needed tables
    ```
 
-4. **Set up PostgreSQL database**
+4. **Set up environment variables**
    ```bash
-   # Create database (adjust credentials as needed)
-   createdb your_database_name
-   # Run SQL code found in /db/schema.sql and /db/populate.sql in supabase to set up and populate tables
+   Create a .env by copying .env.example
+   Edit .env with your database credentials
    ```
 
-5. **Run migrations**
-   ```bash
-   npm run migrate
-   ```
-
-6. **Seed database (optional)**
-   ```bash
-   npm run seed
-   ```
-
-7. **Start the application**
+5. **Start the application**
    ```bash
    npm run dev
    ```
 
-8. **Open your browser**
+6. **Open your browser**
    ```
    http://localhost:3000
    ```
+
+## Error Handling 
+
+1. Database -> The app expects database insert, update, delete, and fetch errors, and handles them by wrapping every Supabase call in try/catch so the app logs the issue and safely redirects or renders a fallback page instead of crashing.
+
+2. External API Calls -> The app expects the OpenTDB API to occasionally fail or return bad data, and handles this by catching API exceptions and skipping default-game creation without exposing any technical errors to the user.
+
+3. Authentication -> The app expects missing or invalid sessions and protects routes by checking req.session.user so that unauthorized users are redirected instead of causing a crash.
+
+4. Form Validation -> The app expects invalid input (like short passwords, invalid emails, or incorrect login credentials) and handles these by re-rendering the form with user-friendly messages rather than failing the request.
 
 ## Project Structure
 
