@@ -148,43 +148,6 @@ async function makeRequest(url, options = {}) {
   }
 }
 
-/**
- * Display a notification message
- * @param {string} message - Message to display
- * @param {string} type - Type of message (success, error, info, warning)
- */
-/* eslint-disable no-unused-vars */
-function showNotification(message, type = 'info') {
-  // Create notification element
-  const notification = document.createElement('div');
-  notification.className = `notification notification-${type}`;
-  notification.textContent = message;
-  notification.style.position = 'fixed';
-  notification.style.top = '20px';
-  notification.style.right = '20px';
-  notification.style.padding = '1rem';
-  notification.style.borderRadius = '4px';
-  notification.style.backgroundColor =
-    type === 'success'
-      ? '#28a745'
-      : type === 'error'
-        ? '#dc3545'
-        : type === 'warning'
-          ? '#ffc107'
-          : '#17a2b8';
-  notification.style.color = 'white';
-  notification.style.zIndex = '1000';
-  notification.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
-
-  // Add to page
-  document.body.appendChild(notification);
-
-  // Remove after 3 seconds
-  setTimeout(() => {
-    notification.remove();
-  }, 3000);
-}
-
 
 // Listens the user to attempt to submit an answer
 document.addEventListener("click", async (event) => {
